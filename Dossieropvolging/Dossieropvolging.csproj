@@ -165,8 +165,20 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Actie.cs" />
+    <Compile Include="Models\Bijlage.cs" />
+    <Compile Include="Models\Dossier.cs" />
+    <Compile Include="Models\Gebruiker.cs" />
+    <Compile Include="Models\Gebruikersgroep.cs" />
+    <Compile Include="Models\Gemeente.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Keuzelijst.cs" />
+    <Compile Include="Models\Klant.cs" />
+    <Compile Include="Models\Land.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Personeelslid.cs" />
+    <Compile Include="Models\Prioriteit.cs" />
+    <Compile Include="Models\Status.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
