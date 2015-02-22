@@ -162,6 +162,7 @@
     <Compile Include="Controllers\DossierController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\StatusController.cs" />
     <Compile Include="DAL\DossieropvolgingContext.cs" />
     <Compile Include="DAL\DossieropvolgingInitializer.cs" />
     <Compile Include="Global.asax.cs">
@@ -253,6 +254,11 @@
     <Content Include="Views\Dossier\Details.cshtml" />
     <Content Include="Views\Dossier\Edit.cshtml" />
     <Content Include="Views\Dossier\Index.cshtml" />
+    <Content Include="Views\Status\Create.cshtml" />
+    <Content Include="Views\Status\Delete.cshtml" />
+    <Content Include="Views\Status\Details.cshtml" />
+    <Content Include="Views\Status\Edit.cshtml" />
+    <Content Include="Views\Status\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
