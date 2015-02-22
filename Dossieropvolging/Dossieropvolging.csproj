@@ -159,8 +159,11 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\DossierController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="DAL\DossieropvolgingContext.cs" />
+    <Compile Include="DAL\DossieropvolgingInitializer.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -172,8 +175,8 @@
     <Compile Include="Models\Gebruikersgroep.cs" />
     <Compile Include="Models\Gemeente.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\Keuzelijst.cs" />
     <Compile Include="Models\Klant.cs" />
+    <Compile Include="Models\Kwalificatie.cs" />
     <Compile Include="Models\Land.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Personeelslid.cs" />
@@ -191,6 +194,8 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="ClassDiagram1.cd" />
+    <Content Include="ClassDiagram2.cd" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -203,7 +208,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -241,6 +248,11 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Dossier\Create.cshtml" />
+    <Content Include="Views\Dossier\Delete.cshtml" />
+    <Content Include="Views\Dossier\Details.cshtml" />
+    <Content Include="Views\Dossier\Edit.cshtml" />
+    <Content Include="Views\Dossier\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

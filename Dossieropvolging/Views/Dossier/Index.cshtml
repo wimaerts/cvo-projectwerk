@@ -1,0 +1,75 @@
+﻿@model IEnumerable<Dossieropvolging.Models.Dossier>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Titel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Inhoud)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Terkenniskoming)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MeldingsDatum)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OpstartDatum)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AfsluitDatum)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AlarmDatum)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Besluit)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Titel)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Inhoud)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Terkenniskoming)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MeldingsDatum)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OpstartDatum)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AfsluitDatum)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AlarmDatum)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Besluit)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>
