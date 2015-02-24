@@ -22,5 +22,6 @@ namespace Dossieropvolging.DAL
         public DbSet<Status> Statussen { get; set; }
         public DbSet<Klant> Klanten { get; set; }
         public DbSet<Kwalificatie> Kwalificaties { get; set; }
+        public DbSet<Terkenniskoming> Terkenniskomingen { get; set; }
     }
 }

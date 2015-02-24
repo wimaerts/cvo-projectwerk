@@ -36,6 +36,16 @@ namespace Dossieropvolging.DAL
             context.SaveChanges();
             #endregion
 
+            #region seed terkenniskoming
+            Terkenniskoming terkenniskomingEmail = new Terkenniskoming("E-mail");
+            Terkenniskoming terkenniskomingTelefoon = new Terkenniskoming("Telefoon");
+            Terkenniskoming terkenniskomingBrief = new Terkenniskoming("Brief");
+            context.Terkenniskomingen.Add(terkenniskomingEmail);
+            context.Terkenniskomingen.Add(terkenniskomingTelefoon);
+            context.Terkenniskomingen.Add(terkenniskomingBrief);
+            context.SaveChanges();
+            #endregion
+
             #region seed kwalificatie
             Kwalificatie kwalificatieGegrond = new Kwalificatie("Gegrond");
             Kwalificatie kwalificatieOngegrond= new Kwalificatie("Ongegrond");
@@ -46,17 +56,17 @@ namespace Dossieropvolging.DAL
             context.SaveChanges();
             #endregion
 
-
             #region seed dossier
             Dossier d = new Dossier()
             {
                 Titel = "TestDossier",
                 Inhoud = "Test",
-                Terkenniskoming = "Telefoon",
+                Terkenniskoming = terkenniskomingEmail,
                 OpstartDatum = DateTime.Now,
                 MeldingsDatum = DateTime.Now,
                 Prioriteit = prioriteitNormaal,
-                Status = statusNieuw
+                Status = statusNieuw,
+                Kwalificatie = kwalificatieGegrond
             };
             context.Dossiers.Add(d);
             context.SaveChanges();

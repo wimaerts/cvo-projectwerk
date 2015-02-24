@@ -14,7 +14,7 @@ namespace Dossieropvolging.Models
         [Required]
         public string Inhoud { get; set; }
         [Required]
-        public string Terkenniskoming { get; set; }
+        public Terkenniskoming Terkenniskoming { get; set; }
         [Required]
         public Status Status { get; set; }
         [Required]

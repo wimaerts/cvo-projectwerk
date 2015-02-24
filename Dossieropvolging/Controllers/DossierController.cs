@@ -47,7 +47,7 @@ namespace Dossieropvolging.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Titel,Inhoud,Terkenniskoming,MeldingsDatum,OpstartDatum,AfsluitDatum,AlarmDatum,Besluit")] Dossier dossier)
+        public ActionResult Create([Bind(Include = "Id,Titel,Inhoud,MeldingsDatum,OpstartDatum,AfsluitDatum,AlarmDatum,Besluit")] Dossier dossier)
         {
             if (ModelState.IsValid)
             {
@@ -79,7 +79,7 @@ namespace Dossieropvolging.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Titel,Inhoud,Terkenniskoming,MeldingsDatum,OpstartDatum,AfsluitDatum,AlarmDatum,Besluit")] Dossier dossier)
+        public ActionResult Edit([Bind(Include = "Id,Titel,Inhoud,MeldingsDatum,OpstartDatum,AfsluitDatum,AlarmDatum,Besluit")] Dossier dossier)
         {
             if (ModelState.IsValid)
             {

@@ -34,14 +34,6 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Terkenniskoming, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Terkenniskoming, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Terkenniskoming, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
             @Html.LabelFor(model => model.MeldingsDatum, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.MeldingsDatum, new { htmlAttributes = new { @class = "form-control" } })
