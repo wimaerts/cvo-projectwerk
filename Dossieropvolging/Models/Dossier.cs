@@ -16,7 +16,7 @@ namespace Dossieropvolging.Models
         [Required]
         public Terkenniskoming Terkenniskoming { get; set; }
         [Required]
-        public Status Status { get; set; }
+        public virtual Status Status { get; set; }
         [Required]
         public Prioriteit Prioriteit { get; set; }
         [Required]
