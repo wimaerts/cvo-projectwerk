@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Dossieropvolging.DAL;
 using Dossieropvolging.Models;
+using System.Data.Entity.Infrastructure;
 
 namespace Dossieropvolging.Controllers
 {
@@ -39,6 +40,7 @@ namespace Dossieropvolging.Controllers
         // GET: Dossier/Create
         public ActionResult Create()
         {
+            PopulateStatusLijst();
             return View();
         }
 
@@ -47,13 +49,32 @@ namespace Dossieropvolging.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Titel,Inhoud,MeldingsDatum,OpstartDatum,AfsluitDatum,AlarmDatum,Besluit")] Dossier dossier)
+        public ActionResult Create(string titel, string inhoud, DateTime meldingsDatum, DateTime? alarmDatum, int statusId)
         {
-            if (ModelState.IsValid)
+            var status = db.Statussen.Where(s => s.Id == statusId);
+
+            Dossier dossier = new Dossier()
             {
-                db.Dossiers.Add(dossier);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                Titel = titel,
+                Inhoud = inhoud,
+                MeldingsDatum = meldingsDatum,
+                AlarmDatum = alarmDatum,
+                Status = status.ToList().FirstOrDefault(),
+                OpstartDatum = DateTime.Now
+            };            
+
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    db.Dossiers.Add(dossier);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (RetryLimitExceededException)
+            {
+                ModelState.AddModelError("", "Het was niet mogelijk om de wijzigingen te bewaren!");
             }
 
             return View(dossier);
@@ -114,6 +135,16 @@ namespace Dossieropvolging.Controllers
             db.Dossiers.Remove(dossier);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        // Opvullen Status lijst
+        private void PopulateStatusLijst(object selectedStatus = null)
+        {
+            var statusQuery = from s in db.Statussen
+                              orderby s.Naam
+                              select s;
+
+            ViewBag.StatusLijst = new SelectList(statusQuery, "Id", "Naam", selectedStatus);
         }
 
         protected override void Dispose(bool disposing)

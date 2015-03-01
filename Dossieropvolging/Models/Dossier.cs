@@ -9,22 +9,36 @@ namespace Dossieropvolging.Models
     public class Dossier
     {
         public int Id { get; set; }
-        [Required]
+
+        //[Required]
         public string Titel { get; set; }
-        [Required]
+
+        //[Required]
         public string Inhoud { get; set; }
-        [Required]
+
+        //[Required]
         public Terkenniskoming Terkenniskoming { get; set; }
-        [Required]
+
+        //[Required]
         public virtual Status Status { get; set; }
-        [Required]
+
+        //[Required]
         public Prioriteit Prioriteit { get; set; }
-        [Required]
+
+        //[Required]
+        [DataType(DataType.Date)]
         public DateTime MeldingsDatum { get; set; }
-        [Required]
+
+        //[Required]
+        [DataType(DataType.Date)]
         public DateTime OpstartDatum { get; set; }
+
+        [DataType(DataType.Date)]
         public DateTime? AfsluitDatum { get; set; }
+
+        [DataType(DataType.Date)]
         public DateTime? AlarmDatum { get; set; }
+
         public Gebruiker Auteur { get; set; }
         public Gebruiker Dossierbeheerder { get; set; }
         public Kwalificatie Kwalificatie { get; set; }

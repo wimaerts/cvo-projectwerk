@@ -7,10 +7,10 @@
 <h2>Create</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Dossier</h4>
         <hr />
@@ -24,9 +24,16 @@
         </div>
 
         <div class="form-group">
+            <label class="control-label col-md-2" for="statusId">Status</label>
+            <div class="col-md-10">
+                @Html.DropDownList("statusId", (SelectList)ViewBag.StatusLijst, String.Empty, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
             @Html.LabelFor(model => model.Inhoud, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Inhoud, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextAreaFor(model => model.Inhoud, 10, 55, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Inhoud, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -40,12 +47,12 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.OpstartDatum, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.OpstartDatum, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.OpstartDatum, "", new { @class = "text-danger" })
+                @Html.LabelFor(model => model.OpstartDatum, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.OpstartDatum, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.OpstartDatum, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.AfsluitDatum, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -63,13 +70,13 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Besluit, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Besluit, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Besluit, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.Besluit, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Besluit, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Besluit, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
