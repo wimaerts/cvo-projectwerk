@@ -201,6 +201,7 @@
     <Compile Include="Models\Terkenniskoming.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\DossierViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -287,6 +288,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\DossiersControllertest\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

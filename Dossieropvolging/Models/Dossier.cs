@@ -27,11 +27,11 @@ namespace Dossieropvolging.Models
 
         //[Required]
         [DataType(DataType.Date)]
-        public DateTime MeldingsDatum { get; set; }
+        public DateTime? MeldingsDatum { get; set; }
 
         //[Required]
         [DataType(DataType.Date)]
-        public DateTime OpstartDatum { get; set; }
+        public DateTime? OpstartDatum { get; set; }
 
         [DataType(DataType.Date)]
         public DateTime? AfsluitDatum { get; set; }

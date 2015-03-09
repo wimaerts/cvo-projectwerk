@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using Dossieropvolging.DAL;
 using Dossieropvolging.Models;
 using System.Data.Entity.Infrastructure;
+using Dossieropvolging.ViewModels;
 
 namespace Dossieropvolging.Controllers
 {
@@ -40,8 +41,17 @@ namespace Dossieropvolging.Controllers
         // GET: Dossier/Create
         public ActionResult Create()
         {
-            PopulateStatusLijst();
-            return View();
+            //PopulateStatusLijst();
+
+            var dossierViewModel = new DossierViewModel();
+            var statusQry = from s in db.Statussen
+                            orderby s.Naam
+                            select s;
+
+            dossierViewModel.lstStatus = statusQry.ToList();
+
+
+            return View(dossierViewModel);
         }
 
         // POST: Dossier/Create
@@ -49,19 +59,12 @@ namespace Dossieropvolging.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(string titel, string inhoud, DateTime meldingsDatum, DateTime? alarmDatum, int statusId)
-        {
-            var status = db.Statussen.Where(s => s.Id == statusId);
+        public ActionResult Create([Bind(Include = "Id,Titel,Inhoud,MeldingsDatum,AfsluitDatum,AlarmDatum,Besluit,Status")] Dossier dossier)
+        {           
+            var status = db.Statussen.Where(s => s.Id == dossier.Status.Id);
 
-            Dossier dossier = new Dossier()
-            {
-                Titel = titel,
-                Inhoud = inhoud,
-                MeldingsDatum = meldingsDatum,
-                AlarmDatum = alarmDatum,
-                Status = status.ToList().FirstOrDefault(),
-                OpstartDatum = DateTime.Now
-            };            
+            dossier.Status = status.First();
+            dossier.OpstartDatum = DateTime.Now;
 
             try
             {
@@ -138,14 +141,14 @@ namespace Dossieropvolging.Controllers
         }
 
         // Opvullen Status lijst
-        private void PopulateStatusLijst(object selectedStatus = null)
-        {
-            var statusQuery = from s in db.Statussen
-                              orderby s.Naam
-                              select s;
+        //private void PopulateStatusLijst(object selectedStatus = null)
+        //{
+        //    var statusQuery = from s in db.Statussen
+        //                      orderby s.Naam
+        //                      select s;
 
-            ViewBag.StatusLijst = new SelectList(statusQuery, "Id", "Naam", selectedStatus);
-        }
+        //    ViewBag.StatusLijst = new SelectList(statusQuery, "Id", "Naam", selectedStatus);
+        //}
 
         protected override void Dispose(bool disposing)
         {
