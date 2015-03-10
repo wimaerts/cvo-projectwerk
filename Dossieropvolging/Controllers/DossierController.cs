@@ -44,12 +44,27 @@ namespace Dossieropvolging.Controllers
             //PopulateStatusLijst();
 
             var dossierViewModel = new DossierViewModel();
+
             var statusQry = from s in db.Statussen
                             orderby s.Naam
                             select s;
 
-            dossierViewModel.lstStatus = statusQry.ToList();
+            var terkenniskomingQry = from t in db.Terkenniskomingen
+                                     orderby t.Naam
+                                     select t;
 
+            var prioriteitQry = from p in db.Prioriteiten
+                                orderby p.Naam
+                                select p;
+
+            var kwalificatieQry = from k in db.Kwalificaties
+                                  orderby k.Naam
+                                  select k;
+
+            dossierViewModel.lstStatus = statusQry.ToList();
+            dossierViewModel.lstTerkenniskoming = terkenniskomingQry.ToList();
+            dossierViewModel.lstPrioriteit = prioriteitQry.ToList();
+            dossierViewModel.lstKwalificatie = kwalificatieQry.ToList();
 
             return View(dossierViewModel);
         }
@@ -59,12 +74,20 @@ namespace Dossieropvolging.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Titel,Inhoud,MeldingsDatum,AfsluitDatum,AlarmDatum,Besluit,Status")] Dossier dossier)
-        {           
+        public ActionResult Create([Bind(Include = "Id,Titel,Inhoud,MeldingsDatum,AfsluitDatum,AlarmDatum,Besluit,Status,Terkenniskoming,Prioriteit,Kwalificatie")] Dossier dossier)
+        {
             var status = db.Statussen.Where(s => s.Id == dossier.Status.Id);
+            var terkenniskoming = db.Terkenniskomingen.Where(t => t.Id == dossier.Terkenniskoming.Id);
+            var prioriteit = db.Prioriteiten.Where(p => p.Id == dossier.Prioriteit.Id);
+            var kwalificatie = db.Kwalificaties.Where(k => k.Id == dossier.Kwalificatie.Id);
 
             dossier.Status = status.First();
+            dossier.Terkenniskoming = terkenniskoming.First();
+            dossier.Prioriteit = prioriteit.First();
+            dossier.Kwalificatie = kwalificatie.First();
             dossier.OpstartDatum = DateTime.Now;
+
+            
 
             try
             {

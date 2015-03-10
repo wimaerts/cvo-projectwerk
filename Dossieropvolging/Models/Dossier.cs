@@ -17,13 +17,13 @@ namespace Dossieropvolging.Models
         public string Inhoud { get; set; }
 
         //[Required]
-        public Terkenniskoming Terkenniskoming { get; set; }
+        public virtual Terkenniskoming Terkenniskoming { get; set; }
 
         //[Required]
         public virtual Status Status { get; set; }
 
         //[Required]
-        public Prioriteit Prioriteit { get; set; }
+        public virtual Prioriteit Prioriteit { get; set; }
 
         //[Required]
         [DataType(DataType.Date)]
@@ -39,9 +39,9 @@ namespace Dossieropvolging.Models
         [DataType(DataType.Date)]
         public DateTime? AlarmDatum { get; set; }
 
-        public Gebruiker Auteur { get; set; }
-        public Gebruiker Dossierbeheerder { get; set; }
-        public Kwalificatie Kwalificatie { get; set; }
+        public virtual Gebruiker Auteur { get; set; }
+        public virtual Gebruiker Dossierbeheerder { get; set; }
+        public virtual Kwalificatie Kwalificatie { get; set; }
         public string Besluit { get; set; }
 
         public virtual ICollection<Bijlage> Bijlages { get; set; }

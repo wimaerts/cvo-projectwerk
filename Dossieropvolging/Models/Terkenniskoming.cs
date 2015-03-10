@@ -10,6 +10,11 @@ namespace Dossieropvolging.Models
         public int Id { get; set; }
         public string Naam { get; set; }
 
+        public Terkenniskoming()
+        {
+
+        }
+
         public Terkenniskoming(string naam)
         {
             this.Naam = naam;

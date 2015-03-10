@@ -10,6 +10,11 @@ namespace Dossieropvolging.Models
         public int Id { get; set; }
         public string Naam { get; set; }
 
+        public Prioriteit()
+        {
+
+        }
+
         public Prioriteit(String naam)
         {
             this.Naam = naam;

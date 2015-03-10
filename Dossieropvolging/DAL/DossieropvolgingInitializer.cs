@@ -8,7 +8,8 @@ using Dossieropvolging.Models;
 
 namespace Dossieropvolging.DAL
 {
-    public class DossieropvolgingInitializer : DropCreateDatabaseAlways<DossieropvolgingContext>
+    //public class DossieropvolgingInitializer : DropCreateDatabaseAlways<DossieropvolgingContext>
+    public class DossieropvolgingInitializer : DropCreateDatabaseIfModelChanges<DossieropvolgingContext>
     {
         protected override void Seed(DossieropvolgingContext context)
         {
