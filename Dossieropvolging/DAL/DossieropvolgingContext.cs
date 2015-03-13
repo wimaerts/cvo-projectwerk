@@ -10,6 +10,12 @@ namespace Dossieropvolging.DAL
 {
     public class DossieropvolgingContext : DbContext
     {
+        public DossieropvolgingContext()
+            : base("DefaultConnection")
+        {
+
+        }
+
         public DbSet<Dossier> Dossiers { get; set; }
         public DbSet<Actie> Acties { get; set; }
         public DbSet<Bijlage> Bijlages { get; set; }
