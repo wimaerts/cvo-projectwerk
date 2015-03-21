@@ -188,8 +188,6 @@
     <Compile Include="Models\Actie.cs" />
     <Compile Include="Models\Bijlage.cs" />
     <Compile Include="Models\Dossier.cs" />
-    <Compile Include="Models\Gebruiker.cs" />
-    <Compile Include="Models\Gebruikersgroep.cs" />
     <Compile Include="Models\Gemeente.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Klant.cs" />

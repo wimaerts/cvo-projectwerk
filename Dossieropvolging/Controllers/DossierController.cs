@@ -10,6 +10,7 @@ using Dossieropvolging.DAL;
 using Dossieropvolging.Models;
 using System.Data.Entity.Infrastructure;
 using Dossieropvolging.ViewModels;
+using System.Web.Security;
 
 namespace Dossieropvolging.Controllers
 {
@@ -61,10 +62,14 @@ namespace Dossieropvolging.Controllers
                                   orderby k.Naam
                                   select k;
 
+            var gebruikersContext = new ApplicationDbContext();    
+           
+            
             dossierViewModel.lstStatus = statusQry.ToList();
             dossierViewModel.lstTerkenniskoming = terkenniskomingQry.ToList();
             dossierViewModel.lstPrioriteit = prioriteitQry.ToList();
             dossierViewModel.lstKwalificatie = kwalificatieQry.ToList();
+            dossierViewModel.lstGebruikers = gebruikersContext.Users.ToList();
 
             return View(dossierViewModel);
         }
@@ -74,7 +79,7 @@ namespace Dossieropvolging.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Titel,Inhoud,MeldingsDatum,AfsluitDatum,AlarmDatum,Besluit,Status,Terkenniskoming,Prioriteit,Kwalificatie")] Dossier dossier)
+        public ActionResult Create([Bind(Include = "Id,Titel,Inhoud,MeldingsDatum,AfsluitDatum,AlarmDatum,Besluit,Status,Terkenniskoming,Prioriteit,Kwalificatie,Dossierbeheerder")] Dossier dossier)
         {
             var status = db.Statussen.Where(s => s.Id == dossier.Status.Id);
             var terkenniskoming = db.Terkenniskomingen.Where(t => t.Id == dossier.Terkenniskoming.Id);
@@ -86,8 +91,6 @@ namespace Dossieropvolging.Controllers
             dossier.Prioriteit = prioriteit.First();
             dossier.Kwalificatie = kwalificatie.First();
             dossier.OpstartDatum = DateTime.Now;
-
-            
 
             try
             {

@@ -19,9 +19,9 @@ namespace Dossieropvolging.DAL
         public DbSet<Dossier> Dossiers { get; set; }
         public DbSet<Actie> Acties { get; set; }
         public DbSet<Bijlage> Bijlages { get; set; }
-        public DbSet<Gebruiker> Gebruikers { get; set; }
+        //public DbSet<Gebruiker> Gebruikers { get; set; }
         public DbSet<Personeelslid> Personeelsleden { get; set; }
-        public DbSet<Gebruikersgroep> Gebruikersgroepen { get; set; }
+        //public DbSet<Gebruikersgroep> Gebruikersgroepen { get; set; }
         public DbSet<Gemeente> Gemeenten { get; set; }
         public DbSet<Land> Landen { get; set; }
         public DbSet<Prioriteit> Prioriteiten { get; set; }

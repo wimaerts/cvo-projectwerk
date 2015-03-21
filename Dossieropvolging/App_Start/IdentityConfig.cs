@@ -66,7 +66,9 @@ namespace Dossieropvolging
             var userManager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
             var roleManager = HttpContext.Current.GetOwinContext().Get<ApplicationRoleManager>();
 
-            const string name = "wim.aerts@gmail.com";
+            const string voornaam = "Wim";
+            const string naam = "Aerts";
+            const string email = "wim.aerts@gmail.com";
             const string password = "cvo123";
             const string roleName = "Admin";
 
@@ -78,10 +80,10 @@ namespace Dossieropvolging
                 var roleresult = roleManager.Create(role);
             }
 
-            var user = userManager.FindByName(name);
+            var user = userManager.FindByName(email);
             if (user == null)
             {
-                user = new ApplicationUser { UserName = name, Email = name };
+                user = new ApplicationUser { UserName = email, Email = email, Voornaam = voornaam, Naam = naam };
                 var result = userManager.Create(user, password);
                 result = userManager.SetLockoutEnabled(user.Id, false);
             }

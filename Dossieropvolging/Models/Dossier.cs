@@ -39,8 +39,8 @@ namespace Dossieropvolging.Models
         [DataType(DataType.Date)]
         public DateTime? AlarmDatum { get; set; }
 
-        public virtual Gebruiker Auteur { get; set; }
-        public virtual Gebruiker Dossierbeheerder { get; set; }
+        //public virtual Gebruiker Auteur { get; set; }
+        public string Dossierbeheerder { get; set; }
         public virtual Kwalificatie Kwalificatie { get; set; }
         public string Besluit { get; set; }
 
