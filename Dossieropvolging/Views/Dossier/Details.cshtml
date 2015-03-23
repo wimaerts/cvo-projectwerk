@@ -1,4 +1,6 @@
-﻿@model Dossieropvolging.Models.Dossier
+﻿@*@model Dossieropvolging.Models.Dossier*@
+
+@model Dossieropvolging.ViewModels.DossierViewModel
 
 @{
     ViewBag.Title = "Details";
@@ -6,109 +8,85 @@
 
 <h2>Details</h2>
 
-<div>
-    <h4>Dossier</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Titel)
-        </dt>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
 
-        <dd>
-            @Html.DisplayFor(model => model.Titel)
-        </dd>
+    <div class="form-horizontal">
+        <h4>Dossier</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Dossier.Id)
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Dossierbeheerder)
-        </dt>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Dossier.OpstartDatum, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Dossier.OpstartDatum, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Dossierbeheerder)
-        </dd>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Dossier.MeldingsDatum, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.Dossier.MeldingsDatum, new { htmlAttributes = new { @class = "form-control" }})
+            </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Inhoud)
-        </dt>
+            @Html.LabelFor(model => model.Dossier.Status, htmlAttributes: new { @class = "control-label col-md-1" })
+            <div class="col-md-2">
+                @Html.DropDownListFor(model => model.Dossier.Status.Id, new SelectList(Model.lstStatus, "Id", "Naam"), new { @class = "form-control" })
+            </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Inhoud)
-        </dd>
+            @Html.LabelFor(model => model.Dossier.Prioriteit, htmlAttributes: new { @class = "control-label col-md-1" })
+            <div class="col-md-2">
+                @Html.DropDownListFor(model => model.Dossier.Prioriteit.Id, new SelectList(Model.lstPrioriteit, "Id", "Naam"), new { @class = "form-control" })
+            </div>
+        </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.MeldingsDatum)
-        </dt>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Dossier.Terkenniskoming, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Dossier.Terkenniskoming.Id, new SelectList(Model.lstTerkenniskoming, "Id", "Naam"), new { @class = "form-control" })
+            </div>
+        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.MeldingsDatum)
-        </dd>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Dossier.Dossierbeheerder, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Dossier.Dossierbeheerder, new SelectList(Model.lstGebruikers, "Id", "UserName"), new { @class = "form-control" })
+            </div>
+        </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.OpstartDatum)
-        </dt>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Dossier.Titel, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Dossier.Titel, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.OpstartDatum)
-        </dd>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Dossier.Inhoud, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Dossier.Inhoud, 10, 55, new { @class = "form-control" })
+            </div>
+        </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.AfsluitDatum)
-        </dt>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Dossier.AlarmDatum, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Dossier.AlarmDatum, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.AfsluitDatum)
-        </dd>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Dossier.Kwalificatie, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Dossier.Kwalificatie.Id, new SelectList(Model.lstKwalificatie, "Id", "Naam"), new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+}
 
-        <dt>
-            @Html.DisplayNameFor(model => model.AlarmDatum)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AlarmDatum)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Besluit)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Besluit)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Status.Naam)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Terkenniskoming)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Terkenniskoming.Naam)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Prioriteit)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Prioriteit.Naam)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Kwalificatie)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Kwalificatie.Naam)
-        </dd>
-
-    </dl>
-</div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Dossier.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

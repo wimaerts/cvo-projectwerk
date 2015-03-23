@@ -60,19 +60,15 @@ namespace Dossieropvolging
             base.Seed(context);
         }
 
-        //Create User=Admin@Admin.com with password=Admin@123456 in the Admin role        
+        // Testgebruikers en rollen aanmaken      
         public static void InitializeIdentityForEF(ApplicationDbContext db)
         {
             var userManager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
             var roleManager = HttpContext.Current.GetOwinContext().Get<ApplicationRoleManager>();
 
-            const string voornaam = "Wim";
-            const string naam = "Aerts";
-            const string email = "wim.aerts@gmail.com";
-            const string password = "cvo123";
             const string roleName = "Admin";
 
-            //Create Role Admin if it does not exist
+            // Admin rol aanmaken als deze nog niet bestaat
             var role = roleManager.FindByName(roleName);
             if (role == null)
             {
@@ -80,6 +76,20 @@ namespace Dossieropvolging
                 var roleresult = roleManager.Create(role);
             }
 
+            // Aanmaken gebruikers
+            var admin = GebruikerAanmaken(userManager, "Wim", "Aerts", "wim.aerts@gmail.com", "cvo123");
+            var user1 = GebruikerAanmaken(userManager, "Johnny", "Hooyberghs", "johnny.hooyberghs@cvoantwerpen.be", "cvo123");
+
+            // De admin testuser aan de admin rol toevoegen indien dit nog niet is gebeurd
+            var rolesForUser = userManager.GetRoles(admin.Id);
+            if (!rolesForUser.Contains(role.Name))
+            {
+                var result = userManager.AddToRole(admin.Id, role.Name);
+            }
+        }
+
+        private static ApplicationUser GebruikerAanmaken(ApplicationUserManager userManager, string voornaam, string naam, string email, string password)
+        {
             var user = userManager.FindByName(email);
             if (user == null)
             {
@@ -87,13 +97,7 @@ namespace Dossieropvolging
                 var result = userManager.Create(user, password);
                 result = userManager.SetLockoutEnabled(user.Id, false);
             }
-
-            // Add user admin to Role Admin if not already added
-            var rolesForUser = userManager.GetRoles(user.Id);
-            if (!rolesForUser.Contains(role.Name))
-            {
-                var result = userManager.AddToRole(user.Id, role.Name);
-            }
+            return user;
         }
     }
 

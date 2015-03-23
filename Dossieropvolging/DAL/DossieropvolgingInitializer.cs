@@ -16,11 +16,11 @@ namespace Dossieropvolging.DAL
             base.Seed(context);
 
             #region seed status
-            Status statusNieuw = new Status("Nieuw");
+            //Status statusNieuw = new Status("Nieuw");
             Status statusActief = new Status("Actief");
             Status statusBevroren= new Status("Bevroren");
             Status statusAfgesloten= new Status("Afgesloten");
-            context.Statussen.Add(statusNieuw);
+            //context.Statussen.Add(statusNieuw);
             context.Statussen.Add(statusActief);
             context.Statussen.Add(statusBevroren);
             context.Statussen.Add(statusAfgesloten);
@@ -60,13 +60,14 @@ namespace Dossieropvolging.DAL
             #region seed dossier
             Dossier d = new Dossier()
             {
-                Titel = "TestDossier",
-                Inhoud = "Test",
+                Titel = "Boete onterecht",
+                Inhoud = "Klant kreeg een boete voor zijn eigen oprit. De nummerplaat van de klant is met een sticker op zijn garage bevestigd.",
                 Terkenniskoming = terkenniskomingEmail,
                 OpstartDatum = DateTime.Now,
                 MeldingsDatum = DateTime.Now,
+                AlarmDatum = DateTime.Now.AddDays(30),
                 Prioriteit = prioriteitNormaal,
-                Status = statusNieuw,
+                Status = statusActief,
                 Kwalificatie = kwalificatieGegrond
             };
             context.Dossiers.Add(d);

@@ -27,6 +27,8 @@ namespace Dossieropvolging.Controllers
         // GET: Dossier/Details/5
         public ActionResult Details(int? id)
         {
+            var dossierViewModel = DossierViewModelAanmaken();
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -36,43 +38,19 @@ namespace Dossieropvolging.Controllers
             {
                 return HttpNotFound();
             }
-            return View(dossier);
+
+            dossierViewModel.Dossier = dossier;
+            return View(dossierViewModel);
         }
 
         // GET: Dossier/Create
         public ActionResult Create()
         {
-            //PopulateStatusLijst();
-
-            var dossierViewModel = new DossierViewModel();
-
-            var statusQry = from s in db.Statussen
-                            orderby s.Naam
-                            select s;
-
-            var terkenniskomingQry = from t in db.Terkenniskomingen
-                                     orderby t.Naam
-                                     select t;
-
-            var prioriteitQry = from p in db.Prioriteiten
-                                orderby p.Naam
-                                select p;
-
-            var kwalificatieQry = from k in db.Kwalificaties
-                                  orderby k.Naam
-                                  select k;
-
-            var gebruikersContext = new ApplicationDbContext();    
-           
-            
-            dossierViewModel.lstStatus = statusQry.ToList();
-            dossierViewModel.lstTerkenniskoming = terkenniskomingQry.ToList();
-            dossierViewModel.lstPrioriteit = prioriteitQry.ToList();
-            dossierViewModel.lstKwalificatie = kwalificatieQry.ToList();
-            dossierViewModel.lstGebruikers = gebruikersContext.Users.ToList();
+            var dossierViewModel = DossierViewModelAanmaken();
 
             return View(dossierViewModel);
         }
+
 
         // POST: Dossier/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -112,6 +90,8 @@ namespace Dossieropvolging.Controllers
         // GET: Dossier/Edit/5
         public ActionResult Edit(int? id)
         {
+            var dossierViewModel = DossierViewModelAanmaken();
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -121,7 +101,9 @@ namespace Dossieropvolging.Controllers
             {
                 return HttpNotFound();
             }
-            return View(dossier);
+
+            dossierViewModel.Dossier = dossier;
+            return View(dossierViewModel);
         }
 
         // POST: Dossier/Edit/5
@@ -129,8 +111,18 @@ namespace Dossieropvolging.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Titel,Inhoud,MeldingsDatum,OpstartDatum,AfsluitDatum,AlarmDatum,Besluit")] Dossier dossier)
+        public ActionResult Edit([Bind(Include = "Id,Opstartdatum,Titel,Inhoud,MeldingsDatum,AlarmDatum,Besluit,Status,Terkenniskoming,Prioriteit,Kwalificatie,Dossierbeheerder")] Dossier dossier)
         {
+            var status = db.Statussen.Where(s => s.Id == dossier.Status.Id);
+            var terkenniskoming = db.Terkenniskomingen.Where(t => t.Id == dossier.Terkenniskoming.Id);
+            var prioriteit = db.Prioriteiten.Where(p => p.Id == dossier.Prioriteit.Id);
+            var kwalificatie = db.Kwalificaties.Where(k => k.Id == dossier.Kwalificatie.Id);
+
+            dossier.Status = status.First();
+            dossier.Terkenniskoming = terkenniskoming.First();
+            dossier.Prioriteit = prioriteit.First();
+            dossier.Kwalificatie = kwalificatie.First();
+
             if (ModelState.IsValid)
             {
                 db.Entry(dossier).State = EntityState.Modified;
@@ -166,15 +158,38 @@ namespace Dossieropvolging.Controllers
             return RedirectToAction("Index");
         }
 
-        // Opvullen Status lijst
-        //private void PopulateStatusLijst(object selectedStatus = null)
-        //{
-        //    var statusQuery = from s in db.Statussen
-        //                      orderby s.Naam
-        //                      select s;
+        // Hulpmethode om viewmodel aan te maken
+        private DossierViewModel DossierViewModelAanmaken()
+        {
+            var dossierViewModel = new DossierViewModel();
 
-        //    ViewBag.StatusLijst = new SelectList(statusQuery, "Id", "Naam", selectedStatus);
-        //}
+            var statusQry = from s in db.Statussen
+                            orderby s.Naam
+                            select s;
+
+            var terkenniskomingQry = from t in db.Terkenniskomingen
+                                     orderby t.Naam
+                                     select t;
+
+            var prioriteitQry = from p in db.Prioriteiten
+                                orderby p.Naam
+                                select p;
+
+            var kwalificatieQry = from k in db.Kwalificaties
+                                  orderby k.Naam
+                                  select k;
+
+            var gebruikersContext = new ApplicationDbContext();
+
+
+            dossierViewModel.lstStatus = statusQry.ToList();
+            dossierViewModel.lstTerkenniskoming = terkenniskomingQry.ToList();
+            dossierViewModel.lstPrioriteit = prioriteitQry.ToList();
+            dossierViewModel.lstKwalificatie = kwalificatieQry.ToList();
+            dossierViewModel.lstGebruikers = gebruikersContext.Users.ToList();
+
+            return dossierViewModel;
+        }
 
         protected override void Dispose(bool disposing)
         {
