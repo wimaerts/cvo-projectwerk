@@ -79,7 +79,7 @@ namespace Dossieropvolging.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Titel,Inhoud,MeldingsDatum,AfsluitDatum,AlarmDatum,Besluit,Status,Terkenniskoming,Prioriteit,Kwalificatie,Dossierbeheerder")] Dossier dossier)
+        public ActionResult Create([Bind(Include = "Id,Titel,Inhoud,MeldingsDatum,AlarmDatum,Besluit,Status,Terkenniskoming,Prioriteit,Kwalificatie,Dossierbeheerder")] Dossier dossier)
         {
             var status = db.Statussen.Where(s => s.Id == dossier.Status.Id);
             var terkenniskoming = db.Terkenniskomingen.Where(t => t.Id == dossier.Terkenniskoming.Id);
