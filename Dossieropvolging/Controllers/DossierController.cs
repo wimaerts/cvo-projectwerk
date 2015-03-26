@@ -57,18 +57,13 @@ namespace Dossieropvolging.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Titel,Inhoud,MeldingsDatum,AlarmDatum,Besluit,Status,Terkenniskoming,Prioriteit,Kwalificatie,Dossierbeheerder")] Dossier dossier)
+        public ActionResult Create(Dossier dossier)
         {
-            var status = db.Statussen.Where(s => s.Id == dossier.Status.Id);
-            var terkenniskoming = db.Terkenniskomingen.Where(t => t.Id == dossier.Terkenniskoming.Id);
-            var prioriteit = db.Prioriteiten.Where(p => p.Id == dossier.Prioriteit.Id);
-            var kwalificatie = db.Kwalificaties.Where(k => k.Id == dossier.Kwalificatie.Id);
-
-            dossier.Status = status.First();
-            dossier.Terkenniskoming = terkenniskoming.First();
-            dossier.Prioriteit = prioriteit.First();
-            dossier.Kwalificatie = kwalificatie.First();
             dossier.OpstartDatum = DateTime.Now;
+            dossier.Status = db.Statussen.Single(s => s.Id == dossier.Status.Id);
+            dossier.Terkenniskoming = db.Terkenniskomingen.Single(t => t.Id == dossier.Terkenniskoming.Id);
+            dossier.Prioriteit = db.Prioriteiten.Single(p => p.Id == dossier.Prioriteit.Id);
+            dossier.Kwalificatie = db.Kwalificaties.Single(k => k.Id == dossier.Kwalificatie.Id);            
 
             try
             {
@@ -111,25 +106,29 @@ namespace Dossieropvolging.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Opstartdatum,Titel,Inhoud,MeldingsDatum,AlarmDatum,Besluit,Status,Terkenniskoming,Prioriteit,Kwalificatie,Dossierbeheerder")] Dossier dossier)
+        public ActionResult Edit(Dossier dossier)
         {
-            var status = db.Statussen.Where(s => s.Id == dossier.Status.Id);
-            var terkenniskoming = db.Terkenniskomingen.Where(t => t.Id == dossier.Terkenniskoming.Id);
-            var prioriteit = db.Prioriteiten.Where(p => p.Id == dossier.Prioriteit.Id);
-            var kwalificatie = db.Kwalificaties.Where(k => k.Id == dossier.Kwalificatie.Id);
+            var dbDossier = db.Dossiers.Single(d => d.Id == dossier.Id);
 
-            dossier.Status = status.First();
-            dossier.Terkenniskoming = terkenniskoming.First();
-            dossier.Prioriteit = prioriteit.First();
-            dossier.Kwalificatie = kwalificatie.First();
+            dbDossier.OpstartDatum = dossier.OpstartDatum;
+            dbDossier.Titel = dossier.Titel;
+            dbDossier.Inhoud = dossier.Inhoud;
+            dbDossier.MeldingsDatum = dossier.MeldingsDatum;
+            dbDossier.AlarmDatum = dossier.AlarmDatum;
+            dbDossier.Besluit = dossier.Besluit;
+            dbDossier.Dossierbeheerder = dossier.Dossierbeheerder;
+            dbDossier.Status = db.Statussen.Single(s => s.Id == dossier.Status.Id);
+            dbDossier.Terkenniskoming = db.Terkenniskomingen.Single(t => t.Id == dossier.Terkenniskoming.Id);
+            dbDossier.Prioriteit = db.Prioriteiten.Single(p => p.Id == dossier.Prioriteit.Id);
+            dbDossier.Kwalificatie = db.Kwalificaties.Single(k => k.Id == dossier.Kwalificatie.Id);
 
             if (ModelState.IsValid)
             {
-                db.Entry(dossier).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(dossier);
+
+            return View(dbDossier);
         }
 
         // GET: Dossier/Delete/5
