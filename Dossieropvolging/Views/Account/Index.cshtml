@@ -1,0 +1,38 @@
+﻿@model Dossieropvolging.ViewModels.BeheerViewModel
+
+@{
+    ViewBag.Title = "Gebruikers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Gebruikers</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.lstGebruikers.FirstOrDefault().Naam)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.lstGebruikers.FirstOrDefault().Voornaam)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.lstGebruikers.FirstOrDefault().Email)
+        </th>
+    </tr>
+
+    @foreach (var item in Model.lstGebruikers)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Naam)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Voornaam)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+        </tr>
+    }
+
+</table>

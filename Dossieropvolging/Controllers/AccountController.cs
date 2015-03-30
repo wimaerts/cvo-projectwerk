@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Dossieropvolging.Models;
+using Dossieropvolging.ViewModels;
 
 namespace Dossieropvolging.Controllers
 {
@@ -19,6 +20,12 @@ namespace Dossieropvolging.Controllers
 
         public AccountController()
         {
+        }
+
+        public ActionResult Index()
+        {
+            var beheerViewModel = BeheerViewModelAanmaken();
+            return View(beheerViewModel);
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
@@ -404,6 +411,17 @@ namespace Dossieropvolging.Controllers
         public ActionResult ExternalLoginFailure()
         {
             return View();
+        }
+
+        // Hulpmethode om viewmodel aan te maken
+        private BeheerViewModel BeheerViewModelAanmaken()
+        {
+            var beheerViewModel = new BeheerViewModel();
+            var gebruikersContext = new ApplicationDbContext();
+
+            beheerViewModel.lstGebruikers = gebruikersContext.Users.ToList();
+
+            return beheerViewModel;
         }
 
         #region Helpers

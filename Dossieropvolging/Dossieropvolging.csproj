@@ -200,6 +200,7 @@
     <Compile Include="Models\Terkenniskoming.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\BeheerViewModel.cs" />
     <Compile Include="ViewModels\DossierViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -284,6 +285,7 @@
     <Content Include="Views\Dossier\Details.cshtml" />
     <Content Include="Views\Dossier\Edit.cshtml" />
     <Content Include="Views\Dossier\Index.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
