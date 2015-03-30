@@ -65,6 +65,16 @@ namespace Dossieropvolging.Models
     public class RegisterViewModel
     {
         [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Voornaam")]
+        public string Voornaam { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Naam")]
+        public string Naam { get; set; }
+
+        [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }

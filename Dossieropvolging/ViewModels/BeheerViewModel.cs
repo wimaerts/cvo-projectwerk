@@ -1,4 +1,5 @@
 ﻿using Dossieropvolging.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,5 +10,6 @@ namespace Dossieropvolging.ViewModels
     public class BeheerViewModel
     {
         public List<ApplicationUser> lstGebruikers { get; set; }
+        public List<IdentityRole> lstRollen { get; set; }
     }
 }

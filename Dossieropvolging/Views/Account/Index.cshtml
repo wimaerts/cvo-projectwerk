@@ -7,6 +7,10 @@
 
 <h2>Gebruikers</h2>
 
+<p>
+    @Html.ActionLink("Nieuwe gebruiker aanmaken", "Create")
+</p>
+
 <table class="table">
     <tr>
         <th>
@@ -31,6 +35,28 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Email)
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+<h2>Rollen</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.lstRollen.FirstOrDefault().Name)
+        </th>
+    </tr>
+
+    @foreach (var item in Model.lstRollen)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
             </td>
         </tr>
     }

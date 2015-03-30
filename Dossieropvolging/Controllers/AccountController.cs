@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Dossieropvolging.Models;
 using Dossieropvolging.ViewModels;
+using System.Data.Entity.Infrastructure;
 
 namespace Dossieropvolging.Controllers
 {
@@ -25,6 +26,8 @@ namespace Dossieropvolging.Controllers
         public ActionResult Index()
         {
             var beheerViewModel = BeheerViewModelAanmaken();
+
+
             return View(beheerViewModel);
         }
 
@@ -44,6 +47,37 @@ namespace Dossieropvolging.Controllers
             {
                 _userManager = value;
             }
+        }
+
+        // GET: /Account/Create
+        public ActionResult Create()
+        {
+            var registerViewModel = new RegisterViewModel();
+
+            return View(registerViewModel);
+        }
+
+        // POST: Dossier/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create(RegisterViewModel model)
+        {
+
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Voornaam = model.Voornaam, Naam = model.Naam };
+                var result = await UserManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    var beheerViewModel = BeheerViewModelAanmaken();
+                    return View("Index", beheerViewModel);
+                }
+                AddErrors(result);
+            }           
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
         }
 
         //
@@ -417,9 +451,10 @@ namespace Dossieropvolging.Controllers
         private BeheerViewModel BeheerViewModelAanmaken()
         {
             var beheerViewModel = new BeheerViewModel();
-            var gebruikersContext = new ApplicationDbContext();
+            var context = new ApplicationDbContext();
 
-            beheerViewModel.lstGebruikers = gebruikersContext.Users.ToList();
+            beheerViewModel.lstGebruikers = context.Users.ToList();
+            beheerViewModel.lstRollen = context.Roles.ToList();
 
             return beheerViewModel;
         }
