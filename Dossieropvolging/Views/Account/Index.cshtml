@@ -7,10 +7,6 @@
 
 <h2>Gebruikers</h2>
 
-<p>
-    @Html.ActionLink("Nieuwe gebruiker aanmaken", "Create")
-</p>
-
 <table class="table">
     <tr>
         <th>
@@ -42,23 +38,38 @@
 </table>
 
 
-<h2>Rollen</h2>
-
+<h2>Beheerders</h2>
 
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.lstRollen.FirstOrDefault().Name)
+            @Html.DisplayNameFor(model => model.lstAdmins.FirstOrDefault().Naam)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.lstAdmins.FirstOrDefault().Voornaam)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.lstAdmins.FirstOrDefault().Email)
         </th>
     </tr>
 
-    @foreach (var item in Model.lstRollen)
+    @foreach (var item in Model.lstAdmins)
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                @Html.DisplayFor(modelItem => item.Naam)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Voornaam)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
             </td>
         </tr>
     }
 
 </table>
+
+<p>
+    @Html.ActionLink("Nieuwe gebruiker aanmaken", "Create")
+</p>

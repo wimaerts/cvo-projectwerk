@@ -14,13 +14,14 @@ using System.Data.Entity.Infrastructure;
 
 namespace Dossieropvolging.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class AccountController : Controller
     {
         private ApplicationUserManager _userManager;
 
         public AccountController()
         {
+
         }
 
         public ActionResult Index()
@@ -57,12 +58,11 @@ namespace Dossieropvolging.Controllers
             return View(registerViewModel);
         }
 
-        // POST: Dossier/Create
+        // POST: /Account/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(RegisterViewModel model)
-        {
-
+        {          
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Voornaam = model.Voornaam, Naam = model.Naam };
@@ -70,6 +70,14 @@ namespace Dossieropvolging.Controllers
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                    if (model.Admin == true)
+                    {
+                        var roleManager = HttpContext.GetOwinContext().Get<ApplicationRoleManager>();
+                        var role = roleManager.FindByName("Admin");
+                        UserManager.AddToRole(user.Id, role.Name);
+                    }
+                    
                     var beheerViewModel = BeheerViewModelAanmaken();
                     return View("Index", beheerViewModel);
                 }
@@ -453,8 +461,8 @@ namespace Dossieropvolging.Controllers
             var beheerViewModel = new BeheerViewModel();
             var context = new ApplicationDbContext();
 
-            beheerViewModel.lstGebruikers = context.Users.ToList();
-            beheerViewModel.lstRollen = context.Roles.ToList();
+            beheerViewModel.lstGebruikers = context.Users.ToList().Where(u => !UserManager.IsInRole(u.Id, "Admin")).ToList();
+            beheerViewModel.lstAdmins = context.Users.ToList().Where(u => UserManager.IsInRole(u.Id, "Admin")).ToList();
 
             return beheerViewModel;
         }
