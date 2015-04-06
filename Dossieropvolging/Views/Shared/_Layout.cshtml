@@ -21,8 +21,14 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Dossiers", "Index", "Dossier")</li>                    
-                    <li>@Html.ActionLink("Beheer", "Index", "Account")</li>
+                    <li>@Html.ActionLink("Dossiers", "Index", "Dossier")</li>  
+                     
+                    @*Beheer alleen tonen als de gebruiker de rechten hiervoor heeft*@
+                    @if (ViewContext.HttpContext.User.IsInRole("Admin"))
+                    {
+                        <li>@Html.ActionLink("Beheer", "Index", "Account")</li>
+                    }           
+                    
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
