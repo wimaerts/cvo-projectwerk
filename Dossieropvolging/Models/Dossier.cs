@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
@@ -8,6 +9,7 @@ namespace Dossieropvolging.Models
 {
     public class Dossier
     {
+        [DisplayName("Dossier")]
         public int Id { get; set; }
 
         //[Required]

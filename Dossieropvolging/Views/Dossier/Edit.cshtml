@@ -14,7 +14,9 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Dossier</h4>
+
+        <div class="titel">Dossier</div>
+
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Dossier.Id)
@@ -89,6 +91,29 @@
             </div>
         </div>
 
+        <div class="titel">Acties</div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NieuweActie, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-8">
+                @Html.TextAreaFor(model => model.NieuweActie.Inhoud, 10, 35, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.NieuweActie.Inhoud, "", new { @class = "text-danger" })             
+            </div>
+            <div class="col-md-2">
+                <input type="submit" value="Toevoegen" class="btn btn-default" />
+            </div>
+        </div>
+
+
+        <div class="titel">Documenten</div>
+
+        @*<div class="form-group">
+            @Html.Label("Opvolgingen", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Dossier.Kwalificatie.Id, new SelectList(Model.lstKwalificatie, "Id", "Naam"), new { @class = "form-control" })
+            </div>
+        </div>*@
+
         @*<div class="form-group">
             @Html.LabelFor(model => model.Titel, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -150,6 +175,7 @@
                 <input type="submit" value="Bewaren" class="btn btn-default" />
             </div>
         </div>
+
     </div>
 }
 

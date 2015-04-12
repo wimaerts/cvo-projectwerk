@@ -22,3 +22,12 @@ select,
 textarea {
     max-width: 100%;
 }
+
+.titel {
+    font-size: large;
+    color: white;
+    background-color: #7A8288;    
+    border-radius: 25px;
+    padding-left: 20px;
+    margin-bottom: 20px;
+}

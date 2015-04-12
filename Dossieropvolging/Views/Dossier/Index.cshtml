@@ -7,8 +7,11 @@
 <h2>Dossier overzicht</h2>
 
 <p>
-    @Html.ActionLink("Nieuw dossier aanmaken", "Create")
+    @Html.ActionLink("Nieuw dossier aanmaken", "Create", null, new { @class = "btn btn-default" } )
 </p>
+
+
+
 <table class="table">
     <tr>
         <th>
@@ -60,7 +63,6 @@
         </td>*@
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.Id })
         </td>
     </tr>
