@@ -62,8 +62,9 @@
             @Html.DisplayFor(modelItem => item.Besluit)
         </td>*@
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink("Bewerken", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Acties", "Actie", new { id = item.Id }) |
+            @Html.ActionLink("Verwijderen", "Delete", new { id=item.Id })
         </td>
     </tr>
 }

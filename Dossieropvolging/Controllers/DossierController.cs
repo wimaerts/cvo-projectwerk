@@ -83,6 +83,25 @@ namespace Dossieropvolging.Controllers
         }
 
         // GET: Dossier/Edit/5
+        public ActionResult Actie(int? id)
+        {
+            var dossierViewModel = DossierViewModelAanmaken();
+
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Dossier dossier = db.Dossiers.Find(id);
+            if (dossier == null)
+            {
+                return HttpNotFound();
+            }
+
+            dossierViewModel.Dossier = dossier;
+            return View(dossierViewModel);
+        }
+
+        // GET: Dossier/Edit/5
         public ActionResult Edit(int? id)
         {
             var dossierViewModel = DossierViewModelAanmaken();

@@ -285,6 +285,7 @@
     <Content Include="Views\Dossier\Index.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Account\Create.cshtml" />
+    <Content Include="Views\Dossier\Actie.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

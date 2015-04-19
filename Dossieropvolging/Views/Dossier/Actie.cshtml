@@ -1,0 +1,31 @@
+﻿@model Dossieropvolging.ViewModels.DossierViewModel
+
+@{
+    ViewBag.Title = "Acties";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Acties</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <div class="form-group">
+
+            @Html.LabelFor(model => model.NieuweActie, htmlAttributes: new { @class = "control-label col-md-2" })
+
+            <div class="col-md-8">
+                @Html.TextAreaFor(model => model.NieuweActie.Inhoud, 10, 35, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.NieuweActie.Inhoud, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="col-md-2">
+                <input type="submit" value="Toevoegen" class="btn btn-default" />
+            </div>
+
+        </div>
+    </div>
+}
