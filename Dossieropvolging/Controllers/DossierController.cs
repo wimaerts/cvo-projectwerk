@@ -82,7 +82,7 @@ namespace Dossieropvolging.Controllers
             return View(dossier);
         }
 
-        // GET: Dossier/Edit/5
+        // GET: Dossier/Actie/5
         public ActionResult Actie(int? id)
         {
             var dossierViewModel = DossierViewModelAanmaken();
@@ -99,6 +99,28 @@ namespace Dossieropvolging.Controllers
 
             dossierViewModel.Dossier = dossier;
             return View(dossierViewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Actie(Actie actie, Dossier dossier)
+        {
+            var dbDossier = db.Dossiers.Single(d => d.Id == dossier.Id);
+
+            Actie nieuweActie = new Actie();
+
+            nieuweActie.Inhoud = actie.Inhoud;
+            nieuweActie.ActieDatum = DateTime.Now;
+
+            dbDossier.Acties.Add(nieuweActie);
+
+            if (ModelState.IsValid)
+            {
+                db.SaveChanges();
+                return RedirectToAction("Actie");
+            }
+
+            return View(dbDossier);
         }
 
         // GET: Dossier/Edit/5

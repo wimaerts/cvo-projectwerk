@@ -7,19 +7,47 @@
 
 <h2>Acties</h2>
 
+<table class="table">
+    <tr>
+        <th>
+            Datum
+        </th>
+        <th>
+            Actie
+        </th>
+    </tr>
+
+    @foreach (var item in Model.Dossier.Acties)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ActieDatum)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Inhoud)
+            </td>
+        </tr>
+    }
+
+</table>
+
+<br />
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
+
 
     <div class="form-horizontal">
 
         <div class="form-group">
 
-            @Html.LabelFor(model => model.NieuweActie, htmlAttributes: new { @class = "control-label col-md-2" })
-
             <div class="col-md-8">
-                @Html.TextAreaFor(model => model.NieuweActie.Inhoud, 10, 35, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.NieuweActie.Inhoud, "", new { @class = "text-danger" })
+                @Html.TextAreaFor(model => model.Actie.Inhoud, 10, 35, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Actie.Inhoud, "", new { @class = "text-danger" })
+                
+                @Html.HiddenFor(model => model.Dossier.Id)
+
             </div>
 
             <div class="col-md-2">

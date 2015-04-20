@@ -17,6 +17,6 @@ namespace Dossieropvolging.ViewModels
         public List<Kwalificatie> lstKwalificatie { get; set; }
         public List<ApplicationUser> lstGebruikers { get; set; }
         public Dossier Dossier { get; set; }
-        public Actie NieuweActie { get; set; }
+        public Actie Actie { get; set; }
     }
 }

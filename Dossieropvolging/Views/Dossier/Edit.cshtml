@@ -99,21 +99,6 @@
 
         <div class="titel">Acties</div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.NieuweActie, htmlAttributes: new { @class = "control-label col-md-2" })
-
-            <div class="col-md-8">
-                @Html.TextAreaFor(model => model.NieuweActie.Inhoud, 10, 35, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.NieuweActie.Inhoud, "", new { @class = "text-danger" })             
-            </div>
-
-            <div class="col-md-2">
-                <input type="submit" value="Toevoegen" class="btn btn-default" />                            
-            </div>           
-
-        </div>
-
-
         <div class="titel">Documenten</div>
 
         @*<div class="form-group">
