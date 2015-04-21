@@ -1,0 +1,53 @@
+﻿@model Dossieropvolging.ViewModels.DossierViewModel
+
+@{
+    ViewBag.Title = "Bijlagen";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Bijlagen</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Naam
+        </th>
+    </tr>
+
+    @foreach (var item in Model.Dossier.Bijlages)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Naam)
+            </td>
+        </tr>
+    }
+
+</table>
+
+@using (Html.BeginForm("Bijlage", "Dossier", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+
+{
+
+    @Html.AntiForgeryToken()
+
+
+    <div class="form-horizontal">
+
+        <div class="form-group">
+
+            @Html.Label("Bijlage", new { @class = "control-label col-md-2" })
+
+            <div class="col-md-8">
+                <input type="file" id="bijlage" name="upload" class="btn btn-file" />
+            </div>
+
+            @Html.HiddenFor(model => model.Dossier.Id)
+
+            <input type="submit" value="Toevoegen" class="btn btn-default" />
+
+        </div>
+
+    </div>
+
+}

@@ -63,7 +63,7 @@ namespace Dossieropvolging.Controllers
             dossier.Status = db.Statussen.Single(s => s.Id == dossier.Status.Id);
             dossier.Terkenniskoming = db.Terkenniskomingen.Single(t => t.Id == dossier.Terkenniskoming.Id);
             dossier.Prioriteit = db.Prioriteiten.Single(p => p.Id == dossier.Prioriteit.Id);
-            dossier.Kwalificatie = db.Kwalificaties.Single(k => k.Id == dossier.Kwalificatie.Id);            
+            dossier.Kwalificatie = db.Kwalificaties.Single(k => k.Id == dossier.Kwalificatie.Id);
 
             try
             {
@@ -80,6 +80,54 @@ namespace Dossieropvolging.Controllers
             }
 
             return View(dossier);
+        }
+
+        // GET: Dossier/Bijlage/5
+        public ActionResult Bijlage(int? id)
+        {
+            var dossierViewModel = DossierViewModelAanmaken();
+
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Dossier dossier = db.Dossiers.Find(id);
+            if (dossier == null)
+            {
+                return HttpNotFound();
+            }
+
+            dossierViewModel.Dossier = dossier;
+            return View(dossierViewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Bijlage(HttpPostedFileBase upload, Dossier dossier)
+        {
+            var dbDossier = db.Dossiers.Single(d => d.Id == dossier.Id);
+
+            if (upload != null && upload.ContentLength > 0)
+            {
+                var bijlage = new Bijlage
+                {
+                    Naam = System.IO.Path.GetFileName(upload.FileName)
+                };
+                using (var reader = new System.IO.BinaryReader(upload.InputStream))
+                {
+                    bijlage.Inhoud = reader.ReadBytes(upload.ContentLength);
+                }
+
+                dbDossier.Bijlages.Add(bijlage);
+
+                if (ModelState.IsValid)
+                {
+                    db.SaveChanges();
+                    return RedirectToAction("Bijlage");
+                }
+            }
+
+            return View(dbDossier);
         }
 
         // GET: Dossier/Actie/5
