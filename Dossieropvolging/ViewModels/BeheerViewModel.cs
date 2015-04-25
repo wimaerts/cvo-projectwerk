@@ -9,8 +9,9 @@ namespace Dossieropvolging.ViewModels
 {
     public class BeheerViewModel
     {
-        public List<ApplicationUser> lstGebruikers { get; set; }
+        public List<ApplicationUser> lstGebruikers { get; set; }        
+        public List<ApplicationUser> lstAdmins { get; set; }        
+
         //public List<IdentityRole> lstRollen { get; set; }
-        public List<ApplicationUser> lstAdmins { get; set; }
     }
 }

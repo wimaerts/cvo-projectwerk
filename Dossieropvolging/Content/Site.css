@@ -52,3 +52,7 @@ textarea {
     cursor: inherit;
     display: block;
 }
+
+.tr-gebruikers {
+    width: 25%;
+}

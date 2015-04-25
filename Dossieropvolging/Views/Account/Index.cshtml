@@ -9,15 +9,19 @@
 
 <table class="table">
     <tr>
-        <th>
+        <th width="25%">
             @Html.DisplayNameFor(model => model.lstGebruikers.FirstOrDefault().Naam)
         </th>
-        <th>
+        <th width="25%">
             @Html.DisplayNameFor(model => model.lstGebruikers.FirstOrDefault().Voornaam)
         </th>
-        <th>
+        <th width="40%">
             @Html.DisplayNameFor(model => model.lstGebruikers.FirstOrDefault().Email)
         </th>
+        <th width="10%">
+            @Html.DisplayNameFor(model => model.lstGebruikers.FirstOrDefault().Actief)
+        </th>
+        <th></th>
     </tr>
 
     @foreach (var item in Model.lstGebruikers)
@@ -32,6 +36,12 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Actief)
+            </td>
+            <td>
+                @Html.ActionLink("Bewerken", "Edit", new { id = item.Id })                
+            </td>
         </tr>
     }
 
@@ -42,15 +52,19 @@
 
 <table class="table">
     <tr>
-        <th>
+        <th width="25%">
             @Html.DisplayNameFor(model => model.lstAdmins.FirstOrDefault().Naam)
         </th>
-        <th>
+        <th width="25%">
             @Html.DisplayNameFor(model => model.lstAdmins.FirstOrDefault().Voornaam)
         </th>
-        <th>
+        <th width="40%">
             @Html.DisplayNameFor(model => model.lstAdmins.FirstOrDefault().Email)
         </th>
+        <th width="10%">
+            @Html.DisplayNameFor(model => model.lstGebruikers.FirstOrDefault().Actief)
+        </th>
+        <th></th>
     </tr>
 
     @foreach (var item in Model.lstAdmins)
@@ -65,6 +79,12 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Actief)
+            </td>
+            <th>
+                @Html.ActionLink("Bewerken", "Edit", new { id = item.Id })                
+            </th>
         </tr>
     }
 

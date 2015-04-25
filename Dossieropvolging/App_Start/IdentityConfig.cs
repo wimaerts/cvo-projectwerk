@@ -77,23 +77,23 @@ namespace Dossieropvolging
             }
 
             // Aanmaken gebruikers
-            var admin = GebruikerAanmaken(userManager, "Wim", "Aerts", "wim.aerts@gmail.com", "cvo123");
-            var user1 = GebruikerAanmaken(userManager, "Johnny", "Hooyberghs", "johnny.hooyberghs@cvoantwerpen.be", "cvo123");
+            var beheerder = GebruikerAanmaken(userManager, "Wim", "Aerts", "wim.aerts@gmail.com", "cvo123", true);
+            var gebruiker = GebruikerAanmaken(userManager, "Johnny", "Hooyberghs", "johnny.hooyberghs@cvoantwerpen.be", "cvo123", true);
 
             // De admin testuser aan de admin rol toevoegen indien dit nog niet is gebeurd
-            var rolesForUser = userManager.GetRoles(admin.Id);
+            var rolesForUser = userManager.GetRoles(beheerder.Id);
             if (!rolesForUser.Contains(role.Name))
             {
-                var result = userManager.AddToRole(admin.Id, role.Name);
+                var result = userManager.AddToRole(beheerder.Id, role.Name);
             }
         }
 
-        private static ApplicationUser GebruikerAanmaken(ApplicationUserManager userManager, string voornaam, string naam, string email, string password)
+        private static ApplicationUser GebruikerAanmaken(ApplicationUserManager userManager, string voornaam, string naam, string email, string password, bool actief)
         {
             var user = userManager.FindByName(email);
             if (user == null)
             {
-                user = new ApplicationUser { UserName = email, Email = email, Voornaam = voornaam, Naam = naam };
+                user = new ApplicationUser { UserName = email, Email = email, Voornaam = voornaam, Naam = naam, Actief = actief };
                 var result = userManager.Create(user, password);
                 result = userManager.SetLockoutEnabled(user.Id, false);
             }

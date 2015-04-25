@@ -11,6 +11,7 @@ using Microsoft.Owin.Security;
 using Dossieropvolging.Models;
 using Dossieropvolging.ViewModels;
 using System.Data.Entity.Infrastructure;
+using System.Net;
 
 namespace Dossieropvolging.Controllers
 {
@@ -50,6 +51,64 @@ namespace Dossieropvolging.Controllers
             }
         }
 
+        // GET: Account/Edit/5
+        public ActionResult Edit(string id)
+        {
+            var GebruikerViewModel = new GebruikerViewModel();
+
+            var context = new ApplicationDbContext();
+
+            //beheerViewModel.lstGebruikers = context.Users.ToList().Where(u => !UserManager.IsInRole(u.Id, "Admin")).ToList();
+
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var gebruiker = context.Users.Single(g => g.Id == id);
+            if (gebruiker == null)
+            {
+                return HttpNotFound();
+            }
+
+            context.Users.ToList().Where(u => UserManager.IsInRole(u.Id, "Admin")).ToList();
+
+            if (UserManager.IsInRole(gebruiker.Id, "Admin"))
+            {
+                GebruikerViewModel.beheerder = true;
+            }
+
+            GebruikerViewModel.gebruiker = gebruiker;
+
+            return View(GebruikerViewModel);
+        }
+
+        // POST: /Account/Edit
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(GebruikerViewModel model)
+        {
+            var gebruiker = UserManager.FindById(model.gebruiker.Id);
+
+
+            if (gebruiker != null)
+            {
+                gebruiker.Naam = model.gebruiker.Naam;
+                gebruiker.Voornaam = model.gebruiker.Voornaam;
+                gebruiker.Actief = model.gebruiker.Actief;
+                gebruiker.Email = model.gebruiker.Email;
+                gebruiker.UserName = model.gebruiker.Email;
+
+                if (ModelState.IsValid)
+                {
+                    UserManager.Update(gebruiker);
+                    return RedirectToAction("Index");
+                }
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View();
+        }
+
         // GET: /Account/Create
         public ActionResult Create()
         {
@@ -65,7 +124,7 @@ namespace Dossieropvolging.Controllers
         {          
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Voornaam = model.Voornaam, Naam = model.Naam };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Voornaam = model.Voornaam, Naam = model.Naam, Actief = model.Actief };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
