@@ -64,13 +64,13 @@ namespace Dossieropvolging.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var gebruiker = context.Users.Single(g => g.Id == id);
+            var gebruiker = UserManager.FindById(id);
             if (gebruiker == null)
             {
                 return HttpNotFound();
             }
 
-            context.Users.ToList().Where(u => UserManager.IsInRole(u.Id, "Admin")).ToList();
+            //context.Users.ToList().Where(u => UserManager.IsInRole(u.Id, "Admin")).ToList();
 
             if (UserManager.IsInRole(gebruiker.Id, "Admin"))
             {
@@ -89,7 +89,6 @@ namespace Dossieropvolging.Controllers
         {
             var gebruiker = UserManager.FindById(model.gebruiker.Id);
 
-
             if (gebruiker != null)
             {
                 gebruiker.Naam = model.gebruiker.Naam;
@@ -97,6 +96,18 @@ namespace Dossieropvolging.Controllers
                 gebruiker.Actief = model.gebruiker.Actief;
                 gebruiker.Email = model.gebruiker.Email;
                 gebruiker.UserName = model.gebruiker.Email;
+
+                var roleManager = HttpContext.GetOwinContext().Get<ApplicationRoleManager>();
+                var role = roleManager.FindByName("Admin");
+
+                if (model.beheerder == true)
+                {
+                    UserManager.AddToRole(gebruiker.Id, role.Name);
+                }
+                else
+                {
+                    UserManager.RemoveFromRole(gebruiker.Id, role.Name);
+                }
 
                 if (ModelState.IsValid)
                 {
