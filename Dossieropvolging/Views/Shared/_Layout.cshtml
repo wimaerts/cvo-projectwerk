@@ -21,8 +21,8 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li class="logo"></li>
-                    <li>@Html.ActionLink("Start", "Index", "Home")</li>
                     <li>@Html.ActionLink("Dossiers", "Index", "Dossier")</li>
+                    <li>@Html.ActionLink("Opzoeken", "Opzoeken", "Dossier")</li>
 
                     @*Beheer alleen tonen als de gebruiker de rechten hiervoor heeft*@
                     @if (ViewContext.HttpContext.User.IsInRole("Admin"))
