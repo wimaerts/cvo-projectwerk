@@ -14,6 +14,7 @@ using System.Web.Security;
 
 namespace Dossieropvolging.Controllers
 {
+    [Authorize]
     public class DossierController : Controller
     {
         private DossieropvolgingContext db = new DossieropvolgingContext();

@@ -7,6 +7,11 @@
 
 <h2>Gebruikers</h2>
 
+<p>
+    @Html.ActionLink("Nieuwe gebruiker aanmaken", "Create", null, new { @class = "btn btn-default" })
+</p>
+
+
 <table class="table">
     <tr>
         <th width="25%">
@@ -89,7 +94,3 @@
     }
 
 </table>
-
-<p>
-    @Html.ActionLink("Nieuwe gebruiker aanmaken", "Create")
-</p>

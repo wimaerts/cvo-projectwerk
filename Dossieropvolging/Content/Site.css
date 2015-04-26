@@ -56,3 +56,11 @@ textarea {
 .tr-gebruikers {
     width: 25%;
 }
+
+.logo {
+    background-image: url('../Images/logo.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 101px;
+    height: 50px;
+}
