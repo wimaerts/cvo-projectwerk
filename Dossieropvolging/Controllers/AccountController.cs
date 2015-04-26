@@ -93,13 +93,31 @@ namespace Dossieropvolging.Controllers
             {
                 gebruiker.Naam = model.gebruiker.Naam;
                 gebruiker.Voornaam = model.gebruiker.Voornaam;
-                gebruiker.Actief = model.gebruiker.Actief;
                 gebruiker.Email = model.gebruiker.Email;
                 gebruiker.UserName = model.gebruiker.Email;
 
                 var roleManager = HttpContext.GetOwinContext().Get<ApplicationRoleManager>();
                 var role = roleManager.FindByName("Admin");
 
+                // Bij het opnieuw activeren van een gebruiker moet er zeker een wachtwoord worden gekozen, anders een foutmeldingf tonen
+                if (model.gebruiker.Actief = true && gebruiker.Actief == false && String.IsNullOrEmpty(model.wachtwoord))
+                {
+                    ModelState.AddModelError("", "Bij het heractiveren van een gebruiker moet er een wachtwoord worden ingesteld !");
+                    return View("Edit", model);
+                }
+
+                // Ervoor zorgen dat gebruiker niet meer kan aanloggen indien passief
+                if (model.gebruiker.Actief == false && gebruiker.Actief == true)
+                {
+                    UserManager.RemovePassword(gebruiker.Id);
+                    gebruiker.Actief = false;
+                }
+                else
+                {
+                    gebruiker.Actief = true;
+                }
+
+                // Gebruiker beheerder maken indien dit werd geselecteerd
                 if (model.beheerder == true)
                 {
                     UserManager.AddToRole(gebruiker.Id, role.Name);
@@ -107,6 +125,13 @@ namespace Dossieropvolging.Controllers
                 else
                 {
                     UserManager.RemoveFromRole(gebruiker.Id, role.Name);
+                }
+
+                // Wachtwoord opnieuw instellen indien er iets werd ingevuld
+                if (!String.IsNullOrEmpty(model.wachtwoord))
+                {
+                    UserManager.RemovePassword(gebruiker.Id);
+                    UserManager.AddPassword(gebruiker.Id, model.wachtwoord);
                 }
 
                 if (ModelState.IsValid)
@@ -117,7 +142,7 @@ namespace Dossieropvolging.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            return View();
+            return View(model);
         }
 
         // GET: /Account/Create
