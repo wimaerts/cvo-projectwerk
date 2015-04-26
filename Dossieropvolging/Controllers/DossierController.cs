@@ -44,6 +44,12 @@ namespace Dossieropvolging.Controllers
             return View(dossierViewModel);
         }
 
+        // GET: Opzoeken
+        public ActionResult Opzoeken()
+        {
+            return View(db.Dossiers.ToList());
+        }
+
         // GET: Dossier/Create
         public ActionResult Create()
         {
