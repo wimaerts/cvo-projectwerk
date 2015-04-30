@@ -18,6 +18,8 @@ namespace Dossieropvolging.Models
         //[Required]
         public string Inhoud { get; set; }
 
+        public bool AlarmDatumVerstreken { get; set; }
+
         //[Required]
         public virtual Terkenniskoming Terkenniskoming { get; set; }
 

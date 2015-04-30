@@ -7,7 +7,7 @@
 <h2>Dossier overzicht</h2>
 
 <p>
-    @Html.ActionLink("Nieuw dossier aanmaken", "Create", null, new { @class = "btn btn-default" } )
+    @Html.ActionLink("Nieuw dossier aanmaken", "Create", null, new { @class = "btn btn-default" })
 </p>
 
 
@@ -17,9 +17,6 @@
         <th>
             @Html.DisplayNameFor(model => model.Titel)
         </th>
-        @*<th>
-            @Html.DisplayNameFor(model => model.Inhoud)
-        </th>*@
         <th>
             @Html.DisplayNameFor(model => model.MeldingsDatum)
         </th>
@@ -27,47 +24,59 @@
             @Html.DisplayNameFor(model => model.OpstartDatum)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.AfsluitDatum)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.AlarmDatum)
         </th>
-        @*<th>
-            @Html.DisplayNameFor(model => model.Besluit)
-        </th>*@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Titel)
-        </td>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.Inhoud)
-        </td>*@
-        <td>
-            @Html.DisplayFor(modelItem => item.MeldingsDatum)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.OpstartDatum)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AfsluitDatum)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AlarmDatum)
-        </td>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.Besluit)
-        </td>*@
-        <td>
-            @Html.ActionLink("Bewerken ", "Edit", new { id = item.Id }) |
-            @Html.ActionLink("Acties", "Actie", new { id = item.Id }) |
-            @Html.ActionLink("Bijlagen", "Bijlage", new { id = item.Id }) |
-            @Html.ActionLink("Verwijderen", "Delete", new { id = item.Id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        if (item.AlarmDatumVerstreken == true)
+        {
+            <tr class="alarm">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Titel)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MeldingsDatum)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OpstartDatum)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AlarmDatum)
+                </td>
+                <td>
+                    @Html.ActionLink("Bewerken ", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Acties", "Actie", new { id = item.Id }) |
+                    @Html.ActionLink("Bijlagen", "Bijlage", new { id = item.Id }) |
+                    @Html.ActionLink("Verwijderen", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+        else
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Titel)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MeldingsDatum)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OpstartDatum)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AlarmDatum)
+                </td>
+                <td>
+                    @Html.ActionLink("Bewerken ", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Acties", "Actie", new { id = item.Id }) |
+                    @Html.ActionLink("Bijlagen", "Bijlage", new { id = item.Id }) |
+                    @Html.ActionLink("Verwijderen", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+    }
 
 </table>

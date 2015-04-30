@@ -22,7 +22,24 @@ namespace Dossieropvolging.Controllers
         // GET: Dossier
         public ActionResult Index()
         {
-            return View(db.Dossiers.ToList());
+            // Alleen dossiers ophalen die nog niet werden afgesloten
+            IEnumerable<Dossier> dossiers = db.Dossiers.Where(d => d.Status.Naam != "Afgesloten");
+
+            AlarmDatumControle(dossiers);
+
+            return View(dossiers);
+        }
+
+        // Nakijken welke dossiers over hun alarmdatum zitten
+        private static void AlarmDatumControle(IEnumerable<Dossier> dossiers)
+        {
+            foreach (Dossier d in dossiers)
+            {
+                if (DateTime.Now > d.AlarmDatum)
+                {
+                    d.AlarmDatumVerstreken = true;
+                }
+            }
         }
 
         // GET: Dossier/Details/5
@@ -253,7 +270,7 @@ namespace Dossieropvolging.Controllers
             return RedirectToAction("Index");
         }
 
-        // Hulpmethode om viewmodel aan te maken
+        // Hulpmethode om dossier viewmodel aan te maken
         private DossierViewModel DossierViewModelAanmaken()
         {
             var dossierViewModel = new DossierViewModel();
