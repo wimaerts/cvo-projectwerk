@@ -1,9 +1,11 @@
-﻿@*@model Dossieropvolging.Models.Dossier*@
+﻿<link href="~/Content/dot-luv/jquery-ui-1.9.2.custom.min.css" rel="stylesheet" />
+<script src="~/ScriptsCustom/DatePicker.js"></script>
 
 @model Dossieropvolging.ViewModels.DossierViewModel
 
 @{
     ViewBag.Title = "Aanmaken";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Aanmaken</h2>
@@ -21,7 +23,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Dossier.MeldingsDatum, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-4">
-                @Html.EditorFor(model => model.Dossier.MeldingsDatum, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Dossier.MeldingsDatum, new { htmlAttributes = new { @class = "form-control", @id = "meldingsdatum" } })
                 @Html.ValidationMessageFor(model => model.Dossier.MeldingsDatum, "", new { @class = "text-danger" })
             </div>
 
@@ -69,7 +71,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Dossier.AlarmDatum, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Dossier.AlarmDatum, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Dossier.AlarmDatum, new { htmlAttributes = new { @class = "form-control", @id = "alarmdatum" } })
                 @Html.ValidationMessageFor(model => model.Dossier.AlarmDatum, "", new { @class = "text-danger" })
             </div>
         </div>
