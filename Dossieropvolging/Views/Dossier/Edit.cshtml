@@ -1,9 +1,11 @@
-﻿@*@model Dossieropvolging.Models.Dossier*@
+﻿<link href="~/Content/dot-luv/jquery-ui-1.9.2.custom.min.css" rel="stylesheet" />
+<script src="~/ScriptsCustom/DatePicker.js"></script>
 
 @model Dossieropvolging.ViewModels.DossierViewModel
 
 @{
     ViewBag.Title = "Bewerken";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Bewerken</h2>
@@ -14,8 +16,6 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-
-        <div class="titel">Dossier</div>
 
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -29,10 +29,9 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Dossier.MeldingsDatum, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Dossier.MeldingsDatum, htmlAttributes: new { @class = "control-label col-md-2"})
             <div class="col-md-4">
-                @Html.EditorFor(model => model.Dossier.MeldingsDatum, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Dossier.MeldingsDatum, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Dossier.MeldingsDatum, new { htmlAttributes = new { @class = "form-control", @id = "meldingsdatum"} })
             </div>
 
             @Html.LabelFor(model => model.Dossier.Status, htmlAttributes: new { @class = "control-label col-md-1" })
@@ -80,7 +79,6 @@
             @Html.LabelFor(model => model.Dossier.AlarmDatum, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Dossier.AlarmDatum, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Dossier.AlarmDatum, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -96,10 +94,6 @@
                 <input type="submit" value="Bewaren" class="btn btn-default" />
             </div>
         </div>
-
-        <div class="titel">Acties</div>
-
-        <div class="titel">Documenten</div>
 
         @*<div class="form-group">
             @Html.Label("Opvolgingen", htmlAttributes: new { @class = "control-label col-md-2" })

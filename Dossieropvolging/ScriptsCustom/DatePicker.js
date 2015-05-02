@@ -1,11 +1,13 @@
 ﻿$(function () {
 
     $("#meldingsdatum").datepicker({
-        inline: true
+        inline: true,
+        dateFormat: 'yy-mm-dd'
     });
 
     $("#alarmdatum").datepicker({
-        inline: true
+        inline: true,
+        dateFormat: 'yy-mm-dd'
     });
 
     $("#dialog-link, #icons li").hover(

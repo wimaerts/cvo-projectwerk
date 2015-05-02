@@ -18,5 +18,8 @@ namespace Dossieropvolging.ViewModels
         public List<ApplicationUser> lstGebruikers { get; set; }
         public Dossier Dossier { get; set; }
         public Actie Actie { get; set; }
+
+        public DateTime? ZoekMeldingsDatum1 { get; set; }
+        public DateTime? ZoekMeldingsDatum2 { get; set; }
     }
 }
