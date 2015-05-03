@@ -5,6 +5,11 @@
         dateFormat: 'yy-mm-dd'
     });
 
+    $("#opstartdatum").datepicker({
+        inline: true,
+        dateFormat: 'yy-mm-dd'
+    });
+
     $("#alarmdatum").datepicker({
         inline: true,
         dateFormat: 'yy-mm-dd'
