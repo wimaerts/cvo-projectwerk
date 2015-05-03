@@ -12,50 +12,33 @@ namespace Dossieropvolging.Models
         [DisplayName("Dossier")]
         public int Id { get; set; }
 
-        //[Required]
         public string Titel { get; set; }
-
-        //[Required]
         public string Inhoud { get; set; }
 
         public bool AlarmDatumVerstreken { get; set; }
 
-        //[Required]
         public virtual Terkenniskoming Terkenniskoming { get; set; }
-
-        //[Required]
         public virtual Status Status { get; set; }
-
-        //[Required]
         public virtual Prioriteit Prioriteit { get; set; }
 
-        //[Required]
-        //[DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime MeldingsDatum { get; set; }
+        public DateTime? MeldingsDatum { get; set; }
 
-        //[Required]
-        //[DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime OpstartDatum { get; set; }
+        public DateTime? OpstartDatum { get; set; }
 
-        //[DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? AfsluitDatum { get; set; }
 
-        //[DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? AlarmDatum { get; set; }
 
-        //public virtual Gebruiker Auteur { get; set; }
         public string Dossierbeheerder { get; set; }
         
         public virtual Kwalificatie Kwalificatie { get; set; }
         public string Besluit { get; set; }
 
         public virtual ICollection<Bijlage> Bijlages { get; set; }
-        public virtual ICollection<Klant> Klanten { get; set; }
         public virtual ICollection<Actie> Acties { get; set; }
-        public virtual ICollection<Personeelslid> BetrokkenPersoneelsleden { get; set; }
     }
 }

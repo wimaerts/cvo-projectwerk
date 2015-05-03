@@ -64,23 +64,23 @@ namespace Dossieropvolging.Models
 
     public class RegisterViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Voornaam is een verplicht veld.")]
         [DataType(DataType.Text)]
         [Display(Name = "Voornaam")]
         public string Voornaam { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Naam is een verplicht veld.")]
         [DataType(DataType.Text)]
         [Display(Name = "Naam")]
         public string Naam { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Email is een verplicht veld.")]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [Required(ErrorMessage = "Wachtwoord is een verplicht veld.")]
+        [StringLength(100, ErrorMessage = "Het {0} moet minstens {2} karakters bevatten.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Wachtwoord")]
         public string Password { get; set; }

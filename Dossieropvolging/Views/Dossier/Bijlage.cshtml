@@ -30,7 +30,9 @@
 {
 
     @Html.AntiForgeryToken()
-
+  
+    // Script bron: http://markusslima.github.io/bootstrap-filestyle/
+    <script type="text/javascript" src="~/ScriptsCustom/FilePicker.js"></script>
 
     <div class="form-horizontal">
 
@@ -39,7 +41,7 @@
             @Html.Label("Bijlage", new { @class = "control-label col-md-2" })
 
             <div class="col-md-8">
-                <input type="file" id="bijlage" name="upload" class="btn btn-file" />
+                <input type="file" id="bijlage" name="upload" class="filestyle" />
             </div>
 
             @Html.HiddenFor(model => model.Dossier.Id)
@@ -50,3 +52,7 @@
 
     </div>
 }
+
+<div>
+    @Html.ActionLink("Terug naar het overzicht", "Index")
+</div>

@@ -22,20 +22,6 @@
         @Html.HiddenFor(model => model.Dossier.Id)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Dossier.Id, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10" style="height:29px;line-height:39px">
-                @Html.DisplayFor(model => model.Dossier.Id, new { htmlAttributes = new { @class = "form-control", @height = "29px" } })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Dossier.OpstartDatum, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10" style="height:29px;line-height:39px">
-                @Html.DisplayFor(model => model.Dossier.OpstartDatum, new { htmlAttributes = new { @class = "form-control", @height="29px" } })
-            </div>
-        </div>
-
-        <div class="form-group">
             @Html.LabelFor(model => model.Dossier.MeldingsDatum, htmlAttributes: new { @class = "control-label col-md-2"})
             <div class="col-md-4">
                 @Html.EditorFor(model => model.Dossier.MeldingsDatum, new { htmlAttributes = new { @class = "form-control", @id = "meldingsdatum"} })
@@ -171,7 +157,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Terug naar het overzicht", "Index")
 </div>
 
 @section Scripts {
