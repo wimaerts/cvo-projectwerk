@@ -32,12 +32,12 @@ namespace Dossieropvolging.Models
         //[Required]
         //[DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime? MeldingsDatum { get; set; }
+        public DateTime MeldingsDatum { get; set; }
 
         //[Required]
         //[DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime? OpstartDatum { get; set; }
+        public DateTime OpstartDatum { get; set; }
 
         //[DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]

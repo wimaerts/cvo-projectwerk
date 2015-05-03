@@ -11,29 +11,29 @@
 <h2>Opzoeken Dossier(s)</h2>
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Opzoeken", "Dossier", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <div class="form-group">
-            @Html.LabelFor(d => d.Dossier.Id, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-3">
-                @Html.EditorFor(model => model.Dossier.Id, new { htmlAttributes = new { @class = "form-control" } })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Dossier.Status, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-3">
-                @Html.DropDownListFor(model => model.Dossier.Status.Id, new SelectList(Model.lstStatus, "Id", "Naam"), new { @class = "form-control" })
+        @*<div class="form-group">
+                @Html.LabelFor(d => d.Dossier.Id, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-3">
+                    @Html.EditorFor(model => model.Dossier.Id, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
             </div>
 
-            @Html.LabelFor(model => model.Dossier.Prioriteit, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-3">
-                @Html.DropDownListFor(model => model.Dossier.Prioriteit.Id, new SelectList(Model.lstPrioriteit, "Id", "Naam"), new { @class = "form-control" })
-            </div>
-        </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Dossier.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-3">
+                    @Html.DropDownListFor(model => model.Dossier.Status.Id, new SelectList(Model.lstStatus, "Id", "Naam"), new { @class = "form-control" })
+                </div>
+
+                @Html.LabelFor(model => model.Dossier.Prioriteit, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-3">
+                    @Html.DropDownListFor(model => model.Dossier.Prioriteit.Id, new SelectList(Model.lstPrioriteit, "Id", "Naam"), new { @class = "form-control" })
+                </div>
+            </div>*@
 
         <div class="form-group">
             @Html.Label("Meldingsdatum tussen ", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -70,6 +70,80 @@
 
     </div>
 }
+
+<br />
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Dossier.Titel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Dossier.MeldingsDatum)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Dossier.Status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Dossier.AlarmDatum)
+        </th>
+        <th></th>
+    </tr>
+
+    @if (Model.GevondenDossiers != null)
+    {
+        foreach (var item in Model.GevondenDossiers)
+        {
+            if (item.AlarmDatumVerstreken == true)
+            {
+                <tr class="alarm">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Titel)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MeldingsDatum)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status.Naam)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AlarmDatum)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Bewerken ", "Edit", new { id = item.Id }) |
+                        @Html.ActionLink("Acties", "Actie", new { id = item.Id }) |
+                        @Html.ActionLink("Bijlagen", "Bijlage", new { id = item.Id }) |
+                        @Html.ActionLink("Verwijderen", "Delete", new { id = item.Id })
+                    </td>
+                </tr>
+            }
+            else
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Titel)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MeldingsDatum)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status.Naam)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AlarmDatum)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Bewerken ", "Edit", new { id = item.Id }) |
+                        @Html.ActionLink("Acties", "Actie", new { id = item.Id }) |
+                        @Html.ActionLink("Bijlagen", "Bijlage", new { id = item.Id }) |
+                        @Html.ActionLink("Verwijderen", "Delete", new { id = item.Id })
+                    </td>
+                </tr>
+            }
+        }
+    }
+
+</table>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

@@ -70,6 +70,37 @@ namespace Dossieropvolging.Controllers
             return View(dossierViewModel);
         }
 
+        // POST: Opzoeken
+        [HttpPost]
+        public ActionResult Opzoeken(Dossier dossier, string ZoekMeldingsDatum1, string ZoekMeldingsDatum2)
+        {
+            IEnumerable<Dossier> gevondenDossiersQry = db.Dossiers.ToList();
+
+            if (!String.IsNullOrEmpty(ZoekMeldingsDatum1) && !String.IsNullOrEmpty(ZoekMeldingsDatum2))
+            {
+                DateTime zoekMeldingsDatum1 = DateTime.Parse(ZoekMeldingsDatum1);
+                DateTime zoekMeldingsDatum2 = DateTime.Parse(ZoekMeldingsDatum2);
+
+                gevondenDossiersQry = gevondenDossiersQry.Where(d => d.MeldingsDatum >= zoekMeldingsDatum1 && d.MeldingsDatum <= zoekMeldingsDatum2);
+            }
+
+            if (!String.IsNullOrEmpty(dossier.Titel))
+            {
+                gevondenDossiersQry = gevondenDossiersQry.Where(d => d.Titel.ToLower().Contains(dossier.Titel.ToLower()));
+            }
+
+            if (!String.IsNullOrEmpty(dossier.Inhoud))
+            {
+                gevondenDossiersQry = gevondenDossiersQry.Where(d => d.Inhoud.ToLower().Contains(dossier.Inhoud.ToLower()));
+            }
+
+            var dossierViewModel = DossierViewModelAanmaken();
+
+            dossierViewModel.GevondenDossiers = gevondenDossiersQry.ToList();
+
+            return View(dossierViewModel);
+        }
+
         // GET: Dossier/Create
         public ActionResult Create()
         {
@@ -164,11 +195,11 @@ namespace Dossieropvolging.Controllers
                 if (ModelState.IsValid)
                 {
                     db.SaveChanges();
-                    return RedirectToAction("Bijlage");
                 }
             }
 
-            return View(dbDossier);
+            ViewBag.Message = "U moet een bestand selecteren!";
+            return RedirectToAction("Bijlage");
         }
 
         // GET: Dossier/Actie/5

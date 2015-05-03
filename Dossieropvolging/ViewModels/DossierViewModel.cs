@@ -19,7 +19,10 @@ namespace Dossieropvolging.ViewModels
         public Dossier Dossier { get; set; }
         public Actie Actie { get; set; }
 
+
+        // Eigenschappen die worden gebruikt voor opzoeken
         public DateTime? ZoekMeldingsDatum1 { get; set; }
         public DateTime? ZoekMeldingsDatum2 { get; set; }
+        public List<Dossier> GevondenDossiers { get; set; }
     }
 }
