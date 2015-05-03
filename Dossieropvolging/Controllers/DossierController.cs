@@ -86,6 +86,9 @@ namespace Dossieropvolging.Controllers
             // voor een nieuw dossier zetten we de standaard terkenniskoming op e-mail
             dossierViewModel.Dossier.Terkenniskoming = db.Terkenniskomingen.Single(p => p.Naam.Equals("E-mail"));
 
+            // voor een nieuw dossier zetten we de standaard alarm datum op +30 dagen
+            dossierViewModel.Dossier.AlarmDatum = DateTime.Now.AddDays(30);
+
             return View(dossierViewModel);
         }
 
