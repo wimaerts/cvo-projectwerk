@@ -93,7 +93,7 @@ namespace Dossieropvolging
             var user = userManager.FindByName(email);
             if (user == null)
             {
-                user = new ApplicationUser { UserName = email, Email = email, Voornaam = voornaam, Naam = naam, Actief = actief };
+                user = new ApplicationUser { UserName = email, Email = email, Voornaam = voornaam, Naam = naam, VolledigeNaam = voornaam + " " + naam, Actief = actief };
                 var result = userManager.Create(user, password);
                 result = userManager.SetLockoutEnabled(user.Id, false);
             }

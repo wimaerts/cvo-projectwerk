@@ -21,7 +21,7 @@
             @Html.DisplayNameFor(model => model.MeldingsDatum)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.OpstartDatum)
+            @Html.DisplayNameFor(model => model.Status)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.AlarmDatum)
@@ -41,7 +41,7 @@
                     @Html.DisplayFor(modelItem => item.MeldingsDatum)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.OpstartDatum)
+                    @Html.DisplayFor(modelItem => item.Status.Naam)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.AlarmDatum)
@@ -64,7 +64,7 @@
                     @Html.DisplayFor(modelItem => item.MeldingsDatum)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.OpstartDatum)
+                    @Html.DisplayFor(modelItem => item.Status.Naam)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.AlarmDatum)

@@ -15,6 +15,16 @@
         dateFormat: 'yy-mm-dd'
     });
 
+    $("#meldingsdatumKeuze1").datepicker({
+        inline: true,
+        dateFormat: 'yy-mm-dd'
+    });
+
+    $("#meldingsdatumKeuze2").datepicker({
+        inline: true,
+        dateFormat: 'yy-mm-dd'
+    });
+
     $("#dialog-link, #icons li").hover(
         function () {
             $(this).addClass("ui-state-hover");

@@ -11,6 +11,7 @@ namespace Dossieropvolging.Models
     {
         public string Voornaam { get; set; }
         public string Naam { get; set; }
+        public string VolledigeNaam { get; set; }
         public bool Actief { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)

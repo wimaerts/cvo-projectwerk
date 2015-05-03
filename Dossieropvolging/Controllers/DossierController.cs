@@ -11,6 +11,7 @@ using Dossieropvolging.Models;
 using System.Data.Entity.Infrastructure;
 using Dossieropvolging.ViewModels;
 using System.Web.Security;
+using Microsoft.AspNet.Identity;
 
 namespace Dossieropvolging.Controllers
 {
@@ -23,15 +24,16 @@ namespace Dossieropvolging.Controllers
         public ActionResult Index()
         {
             // Alleen dossiers ophalen die nog niet werden afgesloten
-            IEnumerable<Dossier> dossiers = db.Dossiers.Where(d => d.Status.Naam != "Afgesloten");
+            var dossierQry = db.Dossiers.Where(d => d.Status.Naam != "Afgesloten");
+            List<Dossier> dossiers = dossierQry.ToList();
 
             AlarmDatumControle(dossiers);
 
-            return View(dossiers);
+            return View(dossiers.OrderBy(d => d.MeldingsDatum));
         }
 
         // Nakijken welke dossiers over hun alarmdatum zitten
-        private static void AlarmDatumControle(IEnumerable<Dossier> dossiers)
+        private static void AlarmDatumControle(List<Dossier> dossiers)
         {
             foreach (Dossier d in dossiers)
             {
@@ -72,6 +74,17 @@ namespace Dossieropvolging.Controllers
         public ActionResult Create()
         {
             var dossierViewModel = DossierViewModelAanmaken();
+
+            dossierViewModel.Dossier = new Dossier();
+
+            // Voor een nieuw dossier zetten we de meldingsdatum standaard op vandaag            
+            dossierViewModel.Dossier.MeldingsDatum = DateTime.Now;
+
+            // voor een nieuw dossier zetten we de standaard prioriteit op normaal
+            dossierViewModel.Dossier.Prioriteit = db.Prioriteiten.Single(p => p.Naam.Equals("Normaal"));
+
+            // voor een nieuw dossier zetten we de standaard terkenniskoming op e-mail
+            dossierViewModel.Dossier.Terkenniskoming = db.Terkenniskomingen.Single(p => p.Naam.Equals("E-mail"));
 
             return View(dossierViewModel);
         }

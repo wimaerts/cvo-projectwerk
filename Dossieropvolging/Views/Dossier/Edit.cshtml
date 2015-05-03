@@ -22,9 +22,16 @@
         @Html.HiddenFor(model => model.Dossier.Id)
 
         <div class="form-group">
+            @Html.LabelFor(model => model.Dossier.Id, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10" style="height:29px;line-height:39px">
+                @Html.DisplayFor(model => model.Dossier.Id, new { htmlAttributes = new { @class = "form-control", @height = "29px" } })
+            </div>
+        </div>
+
+        <div class="form-group">
             @Html.LabelFor(model => model.Dossier.OpstartDatum, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Dossier.OpstartDatum, new { htmlAttributes = new { @class = "form-control", @id = "opstartdatum" } })
+            <div class="col-md-10" style="height:29px;line-height:39px">
+                @Html.DisplayFor(model => model.Dossier.OpstartDatum, new { htmlAttributes = new { @class = "form-control", @height="29px" } })
             </div>
         </div>
 
@@ -55,7 +62,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Dossier.Dossierbeheerder, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Dossier.Dossierbeheerder, new SelectList(Model.lstGebruikers, "Id", "UserName"), new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.Dossier.Dossierbeheerder, new SelectList(Model.lstGebruikers, "Id", "VolledigeNaam"), new { @class = "form-control" })
             </div>
         </div>
 

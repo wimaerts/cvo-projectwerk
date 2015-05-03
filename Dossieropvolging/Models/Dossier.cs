@@ -49,6 +49,7 @@ namespace Dossieropvolging.Models
 
         //public virtual Gebruiker Auteur { get; set; }
         public string Dossierbeheerder { get; set; }
+        
         public virtual Kwalificatie Kwalificatie { get; set; }
         public string Besluit { get; set; }
 
