@@ -15,7 +15,10 @@ namespace Dossieropvolging.Models
         public string Inhoud { get; set; }
         public string Besluit { get; set; }
         public string Dossierbeheerder { get; set; }
+        public string DossierbeheerderNaam { get; set; }
+
         public bool AlarmDatumVerstreken { get; set; }
+
         public virtual Terkenniskoming Terkenniskoming { get; set; }
         public virtual Status Status { get; set; }
         public virtual Prioriteit Prioriteit { get; set; }

@@ -26,6 +26,9 @@
         <th>
             @Html.DisplayNameFor(model => model.AlarmDatum)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Dossierbeheerder)
+        </th>
         <th></th>
     </tr>
 
@@ -45,6 +48,9 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.AlarmDatum)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DossierbeheerderNaam)
                 </td>
                 <td>
                     @Html.ActionLink("Bewerken ", "Edit", new { id = item.Id }) |
@@ -68,6 +74,9 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.AlarmDatum)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DossierbeheerderNaam)
                 </td>
                 <td>
                     @Html.ActionLink("Bewerken ", "Edit", new { id = item.Id }) |

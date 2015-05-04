@@ -19,6 +19,7 @@ namespace Dossieropvolging
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
+            // Seeden van een aantal objecten in de database (dossier, gebruikers, ...)
             Database.SetInitializer(new DossieropvolgingInitializer());
         }
     }

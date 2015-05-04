@@ -128,6 +128,9 @@ namespace Dossieropvolging.Controllers
             dossier.Prioriteit = db.Prioriteiten.Single(p => p.Id == dossier.Prioriteit.Id);
             dossier.Kwalificatie = db.Kwalificaties.Single(k => k.Id == dossier.Kwalificatie.Id);
 
+            var gebruikersContext = new ApplicationDbContext();
+            dossier.DossierbeheerderNaam = gebruikersContext.Users.Find(dossier.Dossierbeheerder).VolledigeNaam;
+
             try
             {
                 if (ModelState.IsValid)
@@ -164,7 +167,7 @@ namespace Dossieropvolging.Controllers
             return View(dossierViewModel);
         }
 
-        // POST: Bijlage
+        // POST: Bijlage Toevoegen
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Bijlage(HttpPostedFileBase upload, Dossier dossier)
@@ -189,15 +192,52 @@ namespace Dossieropvolging.Controllers
                 {
                     db.SaveChanges();
                 }
-
-                return RedirectToAction("Bijlage");
+            }
+            else
+            {
+                // Als er geen geldig bestand werd geselecteerd sturen we een foutboodschap terug
+                ModelState.AddModelError("", "U moet een bestand selecteren!");
             }
 
-            // Als er geen geldig bestand werd geselecteerd sturen we een foutboodschap terug
-            ModelState.AddModelError("", "U moet een bestand selecteren!");
             var dossierViewModel = DossierViewModelAanmaken();
             dossierViewModel.Dossier = dbDossier;
+
             return View(dossierViewModel);         
+        }
+
+        // GET: Bijlage Verwijderen
+        public ActionResult DeleteBijlage(int? id, int? dossierId)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Bijlage bijlage = db.Bijlages.Find(id);
+
+            if (bijlage == null)
+            {
+                return HttpNotFound();
+            }
+
+            // Bijlage verwijderen
+            db.Bijlages.Remove(bijlage);
+            db.SaveChanges();
+
+            var dossierViewModel = DossierViewModelAanmaken();            
+
+            if (dossierId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Dossier dossier = db.Dossiers.Find(dossierId);
+            if (dossier == null)
+            {
+                return HttpNotFound();
+            }
+
+            dossierViewModel.Dossier = dossier;
+            return View("Bijlage", dossierViewModel);
         }
 
         // GET: Dossier/Actie/5
@@ -281,6 +321,9 @@ namespace Dossieropvolging.Controllers
             dbDossier.Terkenniskoming = db.Terkenniskomingen.Single(t => t.Id == dossier.Terkenniskoming.Id);
             dbDossier.Prioriteit = db.Prioriteiten.Single(p => p.Id == dossier.Prioriteit.Id);
             dbDossier.Kwalificatie = db.Kwalificaties.Single(k => k.Id == dossier.Kwalificatie.Id);
+
+            var gebruikersContext = new ApplicationDbContext();
+            dbDossier.DossierbeheerderNaam = gebruikersContext.Users.Find(dossier.Dossierbeheerder).VolledigeNaam;
 
             if (ModelState.IsValid)
             {

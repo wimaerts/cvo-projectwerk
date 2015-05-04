@@ -14,6 +14,7 @@
         <th>
             Naam
         </th>
+        <th></th>
     </tr>
 
     @if (Model.Dossier.Bijlages != null)
@@ -23,6 +24,9 @@
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Naam)
+                </td>
+                <td>       
+                    @Html.ActionLink("Verwijderen", "DeleteBijlage", new { id = item.Id, dossierId = Model.Dossier.Id }, new { @class = "glyphicon glyphicon-trash" })
                 </td>
             </tr>
         }
