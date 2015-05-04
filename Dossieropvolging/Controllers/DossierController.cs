@@ -27,22 +27,11 @@ namespace Dossieropvolging.Controllers
             var dossierQry = db.Dossiers.Where(d => d.Status.Naam != "Afgesloten");
             List<Dossier> dossiers = dossierQry.ToList();
 
-            AlarmDatumControle(dossiers);
+            // Nakijken welke dossiers over hun alarmdatum zitten
+            Dossier.AlarmDatumControle(dossiers);
 
             return View(dossiers.OrderBy(d => d.MeldingsDatum));
-        }
-
-        // Nakijken welke dossiers over hun alarmdatum zitten
-        private static void AlarmDatumControle(List<Dossier> dossiers)
-        {
-            foreach (Dossier d in dossiers)
-            {
-                if (DateTime.Now > d.AlarmDatum)
-                {
-                    d.AlarmDatumVerstreken = true;
-                }
-            }
-        }
+        }       
 
         // GET: Dossier/Details/5
         public ActionResult Details(int? id)
@@ -53,6 +42,7 @@ namespace Dossieropvolging.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Dossier dossier = db.Dossiers.Find(id);
             if (dossier == null)
             {
@@ -76,6 +66,7 @@ namespace Dossieropvolging.Controllers
         {
             IEnumerable<Dossier> gevondenDossiersQry = db.Dossiers.ToList();
 
+            // Nakijken welke dossiers in aanmerking komen op basis van de 2 opgegeven datums
             if (!String.IsNullOrEmpty(ZoekMeldingsDatum1) && !String.IsNullOrEmpty(ZoekMeldingsDatum2))
             {
                 DateTime zoekMeldingsDatum1 = DateTime.Parse(ZoekMeldingsDatum1);
@@ -84,18 +75,19 @@ namespace Dossieropvolging.Controllers
                 gevondenDossiersQry = gevondenDossiersQry.Where(d => d.MeldingsDatum >= zoekMeldingsDatum1 && d.MeldingsDatum <= zoekMeldingsDatum2);
             }
 
+            // Daarna nakijken of in die gevonden dossiers de ingegeven titel voorkomt
             if (!String.IsNullOrEmpty(dossier.Titel))
             {
                 gevondenDossiersQry = gevondenDossiersQry.Where(d => d.Titel.ToLower().Contains(dossier.Titel.ToLower()));
             }
 
+            // Daarna nakijken of in de nu nog resterende dossiers de inhoud overen komt
             if (!String.IsNullOrEmpty(dossier.Inhoud))
             {
                 gevondenDossiersQry = gevondenDossiersQry.Where(d => d.Inhoud.ToLower().Contains(dossier.Inhoud.ToLower()));
             }
 
             var dossierViewModel = DossierViewModelAanmaken();
-
             dossierViewModel.GevondenDossiers = gevondenDossiersQry.ToList();
 
             return View(dossierViewModel);
@@ -105,7 +97,6 @@ namespace Dossieropvolging.Controllers
         public ActionResult Create()
         {
             var dossierViewModel = DossierViewModelAanmaken();
-
             dossierViewModel.Dossier = new Dossier();
 
             // Voor een nieuw dossier zetten we de meldingsdatum standaard op vandaag            
@@ -173,12 +164,14 @@ namespace Dossieropvolging.Controllers
             return View(dossierViewModel);
         }
 
+        // POST: Bijlage
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Bijlage(HttpPostedFileBase upload, Dossier dossier)
         {
             var dbDossier = db.Dossiers.Single(d => d.Id == dossier.Id);
 
+            // Als er een bestand werd toegevoegd met inhoud gaan we dat proberen toe te voegen.
             if (upload != null && upload.ContentLength > 0)
             {
                 var bijlage = new Bijlage
@@ -196,10 +189,15 @@ namespace Dossieropvolging.Controllers
                 {
                     db.SaveChanges();
                 }
+
+                return RedirectToAction("Bijlage");
             }
 
-            ViewBag.Message = "U moet een bestand selecteren!";
-            return RedirectToAction("Bijlage");
+            // Als er geen geldig bestand werd geselecteerd sturen we een foutboodschap terug
+            ModelState.AddModelError("", "U moet een bestand selecteren!");
+            var dossierViewModel = DossierViewModelAanmaken();
+            dossierViewModel.Dossier = dbDossier;
+            return View(dossierViewModel);         
         }
 
         // GET: Dossier/Actie/5
@@ -221,6 +219,7 @@ namespace Dossieropvolging.Controllers
             return View(dossierViewModel);
         }
 
+        // POST: Actie
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Actie(Actie actie, Dossier dossier)

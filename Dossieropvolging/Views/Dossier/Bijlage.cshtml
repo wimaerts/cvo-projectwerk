@@ -7,6 +7,8 @@
 
 <h2>Bijlagen</h2>
 
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
 <table class="table">
     <tr>
         <th>
@@ -14,23 +16,25 @@
         </th>
     </tr>
 
-    @foreach (var item in Model.Dossier.Bijlages)
+    @if (Model.Dossier.Bijlages != null)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Naam)
-            </td>
-        </tr>
+        foreach (var item in Model.Dossier.Bijlages)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Naam)
+                </td>
+            </tr>
+        }
     }
 
 </table>
 
 @using (Html.BeginForm("Bijlage", "Dossier", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
-
 {
 
     @Html.AntiForgeryToken()
-  
+
     // Script bron: http://markusslima.github.io/bootstrap-filestyle/
     <script type="text/javascript" src="~/ScriptsCustom/FilePicker.js"></script>
 
