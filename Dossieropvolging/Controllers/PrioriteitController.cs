@@ -11,73 +11,73 @@ using Dossieropvolging.Models;
 
 namespace Dossieropvolging.Controllers
 {
-    public class StatusController : Controller
+    public class PrioriteitController : Controller
     {
         private DossieropvolgingContext db = new DossieropvolgingContext();
 
-        // GET: Status
+        // GET: Prioriteit
         public ActionResult Index()
         {
-            return View(db.Statussen.ToList());
+            return View(db.Prioriteiten.ToList());
         }
 
-        // GET: Status/Create
+        // GET: Prioriteit/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Status/Create
+        // POST: Prioriteit/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Naam")] Status status)
+        public ActionResult Create([Bind(Include = "Id,Naam")] Prioriteit Prioriteit)
         {
-            if (ModelState.IsValid && !String.IsNullOrEmpty(status.Naam))
+            if (ModelState.IsValid && !String.IsNullOrEmpty(Prioriteit.Naam))
             {
-                db.Statussen.Add(status);
+                db.Prioriteiten.Add(Prioriteit);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
             ModelState.AddModelError("", "Gelieve het naam veld in te vullen alvorens te bewaren.");
 
-            return View(status);
+            return View(Prioriteit);
         }
 
-        // GET: Status/Edit/5
+        // GET: Prioriteit/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Status status = db.Statussen.Find(id);
-            if (status == null)
+            Prioriteit Prioriteit = db.Prioriteiten.Find(id);
+            if (Prioriteit == null)
             {
                 return HttpNotFound();
             }
-            return View(status);
+            return View(Prioriteit);
         }
 
-        // POST: Status/Edit/5
+        // POST: Prioriteit/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Naam")] Status status)
+        public ActionResult Edit([Bind(Include = "Id,Naam")] Prioriteit Prioriteit)
         {
-            if (ModelState.IsValid && !String.IsNullOrEmpty(status.Naam))
+            if (ModelState.IsValid && !String.IsNullOrEmpty(Prioriteit.Naam))
             {
-                db.Entry(status).State = EntityState.Modified;
+                db.Entry(Prioriteit).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            
+
             ModelState.AddModelError("", "Gelieve het naam veld in te vullen alvorens te bewaren.");
 
-            return View(status);
+            return View(Prioriteit);
         }
 
         protected override void Dispose(bool disposing)

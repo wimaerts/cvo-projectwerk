@@ -105,7 +105,7 @@ namespace Dossieropvolging.Models
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "Het {0} moet minstens {2} karakters bevatten.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Wachtwoord")]
         public string Password { get; set; }

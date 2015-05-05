@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Dossieropvolging.Models.Prioriteit>
+
+@{
+    ViewBag.Title = "Prioriteiten";
+}
+
+<h2>Prioriteiten</h2>
+
+<p>
+    @Html.ActionLink("Nieuwe prioriteit aanmaken", "Create", null, new { @class = "btn btn-default" })
+</p>
+
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Naam)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Naam)
+            </td>
+            <td>
+                @Html.ActionLink("Bewerken", "Edit", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>
+
+<div>
+    @Html.ActionLink("Terug naar het selectie scherm", "Index", "Keuzelijst")
+</div>

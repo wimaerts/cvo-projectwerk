@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "Keuzelijst beheer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Keuzelijsten</h2>
+
+<p>
+    Welke lijst wenst u te bewerken ?
+</p>
+
+<div class="dropdown">
+    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+        -- Maak hier uw keuze --
+        <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+        <li>
+            @Html.ActionLink("Prioriteit", "Index", "Prioriteit")
+        </li>
+        <li>
+            @Html.ActionLink("Status", "Index", "Status")
+        </li>
+        <li>
+            @Html.ActionLink("Terkenniskoming", "Index", "Terkenniskoming")
+        </li>
+    </ul>
+</div>
+

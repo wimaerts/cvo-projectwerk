@@ -30,7 +30,8 @@
                     @*Beheer alleen tonen als de gebruiker de rechten hiervoor heeft*@
                     @if (ViewContext.HttpContext.User.IsInRole("Admin"))
                     {
-                        <li>@Html.ActionLink("Beheer", "Index", "Account")</li>
+                        <li>@Html.ActionLink("Beheer gebruikers", "Index", "Account")</li>
+                        <li>@Html.ActionLink("Beheer keuzelijsten", "Index", "Keuzelijst")</li>
                     }
 
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
