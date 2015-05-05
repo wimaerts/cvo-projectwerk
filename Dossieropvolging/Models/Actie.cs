@@ -9,7 +9,6 @@ namespace Dossieropvolging.Models
     {
         public int Id { get; set; }
         public DateTime ActieDatum { get; set; }
-        //public Gebruiker Auteur { get; set; }
         public string Inhoud { get; set; }        
     }
 }

@@ -16,6 +16,10 @@ namespace Dossieropvolging.Models
         public string Besluit { get; set; }
         public string Dossierbeheerder { get; set; }
         public string DossierbeheerderNaam { get; set; }
+        public string Melder { get; set; }
+
+        [DisplayName("Contactgegevens")]
+        public string MelderAdres { get; set; }
 
         public bool AlarmDatumVerstreken { get; set; }
 

@@ -62,6 +62,8 @@ namespace Dossieropvolging.DAL
             {
                 Titel = "Boete onterecht",
                 Inhoud = "Klant kreeg een boete voor zijn eigen oprit. De nummerplaat van de klant is met een sticker op zijn garage bevestigd.",
+                Melder = "Mieke",
+                MelderAdres = "Boomse Steenweg 1, 2020 Antwerpen",
                 Terkenniskoming = terkenniskomingEmail,
                 OpstartDatum = DateTime.Now.Date,
                 MeldingsDatum = DateTime.Now.Date,

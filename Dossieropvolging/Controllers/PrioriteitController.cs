@@ -11,6 +11,7 @@ using Dossieropvolging.Models;
 
 namespace Dossieropvolging.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class PrioriteitController : Controller
     {
         private DossieropvolgingContext db = new DossieropvolgingContext();

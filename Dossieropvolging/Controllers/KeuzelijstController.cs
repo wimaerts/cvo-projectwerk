@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace Dossieropvolging.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class KeuzelijstController : Controller
     {
         // GET: Keuzelijst

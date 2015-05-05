@@ -103,6 +103,12 @@ namespace Dossieropvolging.Controllers
                 gevondenDossiersQry = gevondenDossiersQry.Where(d => d.MeldingsDatum >= zoekMeldingsDatum1 && d.MeldingsDatum <= zoekMeldingsDatum2);
             }
 
+            // Daarna nakijken of in die gevonden dossiers de ingegeven melder voorkomt
+            if (!String.IsNullOrEmpty(dossier.Melder))
+            {
+                gevondenDossiersQry = gevondenDossiersQry.Where(d => d.Melder.ToLower().Contains(dossier.Melder.ToLower()));
+            }
+
             // Daarna nakijken of in die gevonden dossiers de ingegeven titel voorkomt
             if (!String.IsNullOrEmpty(dossier.Titel))
             {

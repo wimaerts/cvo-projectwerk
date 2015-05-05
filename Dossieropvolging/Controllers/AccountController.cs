@@ -28,8 +28,6 @@ namespace Dossieropvolging.Controllers
         public ActionResult Index()
         {
             var beheerViewModel = BeheerViewModelAanmaken();
-
-
             return View(beheerViewModel);
         }
 
@@ -56,21 +54,16 @@ namespace Dossieropvolging.Controllers
         {
             var GebruikerViewModel = new GebruikerViewModel();
 
-            var context = new ApplicationDbContext();
-
-            //beheerViewModel.lstGebruikers = context.Users.ToList().Where(u => !UserManager.IsInRole(u.Id, "Admin")).ToList();
-
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             var gebruiker = UserManager.FindById(id);
             if (gebruiker == null)
             {
                 return HttpNotFound();
             }
-
-            //context.Users.ToList().Where(u => UserManager.IsInRole(u.Id, "Admin")).ToList();
 
             if (UserManager.IsInRole(gebruiker.Id, "Admin"))
             {
@@ -78,7 +71,6 @@ namespace Dossieropvolging.Controllers
             }
 
             GebruikerViewModel.gebruiker = gebruiker;
-
             return View(GebruikerViewModel);
         }
 
@@ -150,7 +142,6 @@ namespace Dossieropvolging.Controllers
         public ActionResult Create()
         {
             var registerViewModel = new RegisterViewModel();
-
             return View(registerViewModel);
         }
 
@@ -246,7 +237,7 @@ namespace Dossieropvolging.Controllers
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Aanloggen is voor deze gebruiker niet toegestaan.");
+                    ModelState.AddModelError("", "Aanloggen is voor deze gebruiker niet toegestaan. (wachtwoord foutief of account uitgeschakeld)");
                     return View(model);
             }
         }
