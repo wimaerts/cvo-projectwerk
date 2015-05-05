@@ -62,9 +62,37 @@ namespace Dossieropvolging.Controllers
 
         // POST: Opzoeken
         [HttpPost]
-        public ActionResult Opzoeken(Dossier dossier, string ZoekMeldingsDatum1, string ZoekMeldingsDatum2)
+        public ActionResult Opzoeken(Dossier dossier, string ZoekMeldingsDatum1, string ZoekMeldingsDatum2, string DossierId, string StatusId, string PrioriteitId)
         {
             IEnumerable<Dossier> gevondenDossiersQry = db.Dossiers.ToList();
+
+            // Nakijken of dossier nummer wordt gevonden
+            if (!String.IsNullOrEmpty(DossierId))
+            {
+                try
+                {
+                    int dossierId = Convert.ToInt32(DossierId);
+                    gevondenDossiersQry = gevondenDossiersQry.Where(d => d.Id == dossierId);
+                }
+                catch(Exception)
+                {
+                    ModelState.AddModelError("", "Dossier nummer moet een numerieke waarde zijn.");
+                }                
+            }
+
+            // Nakijken welke dossiers de gekozen status hebben
+            if (!String.IsNullOrEmpty(StatusId))
+            {
+                int statusId = Convert.ToInt32(StatusId);
+                gevondenDossiersQry = gevondenDossiersQry.Where(d => d.Status.Id == statusId);
+            }
+
+            // Nakijken welke dossiers de gekozen prioriteit hebben
+            if (!String.IsNullOrEmpty(PrioriteitId))
+            {
+                int prioriteitId = Convert.ToInt32(PrioriteitId);
+                gevondenDossiersQry = gevondenDossiersQry.Where(d => d.Prioriteit.Id == prioriteitId);
+            }
 
             // Nakijken welke dossiers in aanmerking komen op basis van de 2 opgegeven datums
             if (!String.IsNullOrEmpty(ZoekMeldingsDatum1) && !String.IsNullOrEmpty(ZoekMeldingsDatum2))
@@ -179,7 +207,8 @@ namespace Dossieropvolging.Controllers
             {
                 var bijlage = new Bijlage
                 {
-                    Naam = System.IO.Path.GetFileName(upload.FileName)
+                    Naam = System.IO.Path.GetFileName(upload.FileName),
+                    ToegevoegdOp = DateTime.Now
                 };
                 using (var reader = new System.IO.BinaryReader(upload.InputStream))
                 {

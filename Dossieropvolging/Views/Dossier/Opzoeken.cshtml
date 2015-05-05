@@ -14,26 +14,28 @@
 @using (Html.BeginForm("Opzoeken", "Dossier", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
+    
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
     <div class="form-horizontal">
-        @*<div class="form-group">
-                @Html.LabelFor(d => d.Dossier.Id, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="form-group">
+                @Html.Label("Dossier nummer", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-3">
-                    @Html.EditorFor(model => model.Dossier.Id, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.DossierId, new { htmlAttributes = new { @class = "form-control" } })
                 </div>
             </div>
 
             <div class="form-group">
                 @Html.LabelFor(model => model.Dossier.Status, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-3">
-                    @Html.DropDownListFor(model => model.Dossier.Status.Id, new SelectList(Model.lstStatus, "Id", "Naam"), new { @class = "form-control" })
+                    @Html.DropDownListFor(model => model.StatusId, new SelectList(Model.lstStatus, "Id", "Naam"),"" , new { @class = "form-control" })
                 </div>
 
                 @Html.LabelFor(model => model.Dossier.Prioriteit, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-3">
-                    @Html.DropDownListFor(model => model.Dossier.Prioriteit.Id, new SelectList(Model.lstPrioriteit, "Id", "Naam"), new { @class = "form-control" })
+                    @Html.DropDownListFor(model => model.PrioriteitId, new SelectList(Model.lstPrioriteit, "Id", "Naam"),"" , new { @class = "form-control" })
                 </div>
-            </div>*@
+            </div>
 
         <div class="form-group">
             @Html.Label("Meldingsdatum tussen ", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -76,6 +78,9 @@
 <table class="table">
     <tr>
         <th>
+            @Html.DisplayNameFor(model => model.Dossier.Id)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Dossier.Titel)
         </th>
         <th>
@@ -97,6 +102,9 @@
             if (item.AlarmDatumVerstreken == true)
             {
                 <tr class="alarm">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Titel)
                     </td>
@@ -120,6 +128,9 @@
             else
             {
                 <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Titel)
                     </td>

@@ -21,6 +21,9 @@ namespace Dossieropvolging.ViewModels
 
 
         // Eigenschappen die worden gebruikt voor opzoeken
+        public string DossierId { get; set; }
+        public string StatusId { get; set; }
+        public string PrioriteitId { get; set; }
         public DateTime? ZoekMeldingsDatum1 { get; set; }
         public DateTime? ZoekMeldingsDatum2 { get; set; }
         public List<Dossier> GevondenDossiers { get; set; }

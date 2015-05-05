@@ -9,6 +9,7 @@ namespace Dossieropvolging.Models
     {
         public int Id { get; set; }
         public string Naam { get; set; }
+        public DateTime ToegevoegdOp { get; set; }
         public byte[] Inhoud { get; set; }
     }
 }

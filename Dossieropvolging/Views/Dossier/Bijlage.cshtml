@@ -12,9 +12,16 @@
 <table class="table">
     <tr>
         <th>
+            Id
+        </th>
+        <th>
             Naam
         </th>
-        <th></th>
+        <th>
+            Toegevoegd Op
+        </th>
+        <th>            
+        </th>
     </tr>
 
     @if (Model.Dossier.Bijlages != null)
@@ -23,7 +30,13 @@
         {
             <tr>
                 <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.Naam)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ToegevoegdOp)
                 </td>
                 <td>       
                     @Html.ActionLink("Verwijderen", "DeleteBijlage", new { id = item.Id, dossierId = Model.Dossier.Id }, new { @class = "glyphicon glyphicon-trash" })
@@ -33,6 +46,8 @@
     }
 
 </table>
+
+<br>
 
 @using (Html.BeginForm("Bijlage", "Dossier", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {

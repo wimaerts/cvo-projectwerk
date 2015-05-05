@@ -15,6 +15,9 @@
 <table class="table">
     <tr>
         <th>
+            @Html.DisplayNameFor(model => model.Id)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Titel)
         </th>
         <th>
@@ -37,6 +40,9 @@
         if (item.AlarmDatumVerstreken == true)
         {
             <tr class="alarm">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Titel)
                 </td>
@@ -63,6 +69,9 @@
         else
         {
             <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Titel)
                 </td>
