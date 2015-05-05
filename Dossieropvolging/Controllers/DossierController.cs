@@ -15,7 +15,7 @@ using Microsoft.AspNet.Identity;
 
 namespace Dossieropvolging.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin, Gebruiker")]
     public class DossierController : Controller
     {
         private DossieropvolgingContext db = new DossieropvolgingContext();

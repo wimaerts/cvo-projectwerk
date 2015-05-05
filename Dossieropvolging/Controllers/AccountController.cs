@@ -15,7 +15,7 @@ using System.Net;
 
 namespace Dossieropvolging.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, Gebruiker")]
     public class AccountController : Controller
     {
         private ApplicationUserManager _userManager;
@@ -93,6 +93,7 @@ namespace Dossieropvolging.Controllers
             {
                 gebruiker.Naam = model.gebruiker.Naam;
                 gebruiker.Voornaam = model.gebruiker.Voornaam;
+                gebruiker.VolledigeNaam = gebruiker.Voornaam + " " + gebruiker.Naam;
                 gebruiker.Email = model.gebruiker.Email;
                 gebruiker.UserName = model.gebruiker.Email;
 
@@ -160,16 +161,33 @@ namespace Dossieropvolging.Controllers
         {          
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Voornaam = model.Voornaam, Naam = model.Naam, Actief = model.Actief };
+                var user = new ApplicationUser 
+                { 
+                    UserName = model.Email, 
+                    Email = model.Email, 
+                    Voornaam = model.Voornaam, 
+                    Naam = model.Naam, 
+                    VolledigeNaam = model.Voornaam + " " + model.Naam,
+                    Actief = model.Actief,
+                    LockoutEnabled = false,
+                    TwoFactorEnabled = false 
+                };
+
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
+                    // De nieuwe gebruiker toevoegen aan admin of gebruiker naargelang de keuze die werd gemaakt
+                    var roleManager = HttpContext.GetOwinContext().Get<ApplicationRoleManager>();
                     if (model.Admin == true)
-                    {
-                        var roleManager = HttpContext.GetOwinContext().Get<ApplicationRoleManager>();
+                    {                        
                         var role = roleManager.FindByName("Admin");
+                        UserManager.AddToRole(user.Id, role.Name);
+                    }
+                    else
+                    {
+                        var role = roleManager.FindByName("Gebruiker");
                         UserManager.AddToRole(user.Id, role.Name);
                     }
                     
@@ -228,7 +246,7 @@ namespace Dossieropvolging.Controllers
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
+                    ModelState.AddModelError("", "Aanloggen is voor deze gebruiker niet toegestaan.");
                     return View(model);
             }
         }
@@ -534,8 +552,10 @@ namespace Dossieropvolging.Controllers
 
         //
         // POST: /Account/LogOff
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+
+        // GET /Account/Logoff
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);

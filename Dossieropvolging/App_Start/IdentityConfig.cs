@@ -66,25 +66,49 @@ namespace Dossieropvolging
             var userManager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
             var roleManager = HttpContext.Current.GetOwinContext().Get<ApplicationRoleManager>();
 
-            const string roleName = "Admin";
+            const string rolAdmin = "Admin";
+            const string rolGebruiker = "Gebruiker";
 
             // Admin rol aanmaken als deze nog niet bestaat
-            var role = roleManager.FindByName(roleName);
-            if (role == null)
+            var roleAdmin = roleManager.FindByName(rolAdmin);
+            if (roleAdmin == null)
             {
-                role = new IdentityRole(roleName);
-                var roleresult = roleManager.Create(role);
+                roleAdmin = new IdentityRole(rolAdmin);
+                var roleresult = roleManager.Create(roleAdmin);
+            }
+
+            // Gebruiker rol aanmaken als deze nog niet bestaat
+            var roleGebruiker = roleManager.FindByName(rolGebruiker);
+            if (roleGebruiker == null)
+            {
+                roleGebruiker = new IdentityRole(rolGebruiker);
+                var roleresult = roleManager.Create(roleGebruiker);
             }
 
             // Aanmaken gebruikers
-            var beheerder = GebruikerAanmaken(userManager, "Wim", "Aerts", "wim.aerts@gmail.com", "cvo123", true);
-            var gebruiker = GebruikerAanmaken(userManager, "Johnny", "Hooyberghs", "johnny.hooyberghs@cvoantwerpen.be", "cvo123", true);
+            var beheerder1 = GebruikerAanmaken(userManager, "Wim", "Aerts", "wim.aerts@gmail.com", "cvo123", true);
+            var beheerder2 = GebruikerAanmaken(userManager, "Johnny", "Hooyberghs", "johnny.hooyberghs@cvoantwerpen.be", "cvo123", true);
+            var gebruiker1 = GebruikerAanmaken(userManager, "Jan", "Janssens", "jan.janssens@gmail.com", "cvo123", true);
 
-            // De admin testuser aan de admin rol toevoegen indien dit nog niet is gebeurd
-            var rolesForUser = userManager.GetRoles(beheerder.Id);
-            if (!rolesForUser.Contains(role.Name))
+            // beheerder1 aan de admin rol toevoegen indien dit nog niet is gebeurd
+            var rolesForUser = userManager.GetRoles(beheerder1.Id);
+            if (!rolesForUser.Contains(roleAdmin.Name))
             {
-                var result = userManager.AddToRole(beheerder.Id, role.Name);
+                var result = userManager.AddToRole(beheerder1.Id, roleAdmin.Name);
+            }
+
+            // beheerder2 aan de admin rol toevoegen indien dit nog niet is gebeurd
+            rolesForUser = userManager.GetRoles(beheerder2.Id);
+            if (!rolesForUser.Contains(roleAdmin.Name))
+            {
+                var result = userManager.AddToRole(beheerder2.Id, roleAdmin.Name);
+            }
+
+            // gebruiker1 aan de gebruiker rol toevoegen indien dit nog niet is gebeurd
+            rolesForUser = userManager.GetRoles(gebruiker1.Id);
+            if (!rolesForUser.Contains(roleGebruiker.Name))
+            {
+                var result = userManager.AddToRole(gebruiker1.Id, roleGebruiker.Name);
             }
         }
 

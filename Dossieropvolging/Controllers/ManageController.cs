@@ -10,7 +10,7 @@ using Dossieropvolging.Models;
 
 namespace Dossieropvolging.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin, Gebruiker")]
     public class ManageController : Controller
     {
         public ManageController()
@@ -40,10 +40,10 @@ namespace Dossieropvolging.Controllers
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
-                : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
+                message == ManageMessageId.ChangePasswordSuccess ? "Uw wachtwoord werd gewijzigd."
+                : message == ManageMessageId.SetPasswordSuccess ? "Uw wachtwoord werd ingesteld."
                 : message == ManageMessageId.SetTwoFactorSuccess ? "Your two-factor authentication provider has been set."
-                : message == ManageMessageId.Error ? "An error has occurred."
+                : message == ManageMessageId.Error ? "Er ging iets fout."
                 : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
                 : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
                 : "";
