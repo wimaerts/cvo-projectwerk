@@ -11,5 +11,6 @@ namespace Dossieropvolging.Models
         public string Naam { get; set; }
         public DateTime ToegevoegdOp { get; set; }
         public byte[] Inhoud { get; set; }
+        public int DossierId { get; set; }
     }
 }
