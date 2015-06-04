@@ -9,6 +9,7 @@ namespace Dossieropvolging.Models
     {
         public int Id { get; set; }
         public DateTime ActieDatum { get; set; }
-        public string Inhoud { get; set; }        
+        public string Inhoud { get; set; }
+        public int DossierId { get; set; }
     }
 }
